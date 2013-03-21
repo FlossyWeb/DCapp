@@ -267,7 +267,7 @@
 			var cell = $.sessionStorage.getItem('cell');
 			var rdv = $.sessionStorage.getItem('rdv');
 			//document.getElementById('to').value = rdv;
-			//$('#to').val(rdv);
+			$('#to').val(rdv);
 
 			var infos = '<p>';
 			if (com != '')
@@ -387,8 +387,8 @@
             {
                 //navigator.geolocation.getCurrentPosition(get_coords, showError,{enableHighAccuracy:true, maximumAge:Infinity});
                 //navigator.geolocation.getCurrentPosition(get_coords, showError,{enableHighAccuracy:true, maximumAge:0});
-                navigator.geolocation.getCurrentPosition(get_coords, showError,{enableHighAccuracy:true});
-				//navigator.geolocation.getCurrentPosition(get_coords, showError);
+                //navigator.geolocation.getCurrentPosition(get_coords, showError,{enableHighAccuracy:true});
+				navigator.geolocation.getCurrentPosition(get_coords, showError);
             }
             else {
 				alert("Localisation impossible.");
