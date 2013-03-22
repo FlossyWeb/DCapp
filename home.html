@@ -386,9 +386,9 @@
             if (navigator.geolocation)
             {
                 //navigator.geolocation.getCurrentPosition(get_coords, showError,{enableHighAccuracy:true, maximumAge:Infinity});
-                navigator.geolocation.getCurrentPosition(get_coords, showError,{enableHighAccuracy:true, timeout:20000, maximumAge:0});
+                //navigator.geolocation.getCurrentPosition(get_coords, showError,{enableHighAccuracy:true, timeout:60000, maximumAge:0});
                 //navigator.geolocation.getCurrentPosition(get_coords, showError,{enableHighAccuracy:true});
-				//navigator.geolocation.getCurrentPosition(get_coords, showError);
+				navigator.geolocation.getCurrentPosition(get_coords, showError, {enableHighAccuracy:true, maximumAge:0});
             }
             else {
 				alert("Localisation impossible.");
@@ -421,7 +421,7 @@
 				  x.innerHTML="Location information is unavailable."
 				  break;
 				case error.TIMEOUT:
-					navigator.geolocation.getCurrentPosition(get_coords, showError,{enableHighAccuracy:false, timeout:10000, maximumAge:Infinity});
+					//navigator.geolocation.getCurrentPosition(get_coords, showError,{enableHighAccuracy:false, timeout:10000, maximumAge:Infinity});
 				  x.innerHTML="The request to get user location timed out."
 				  
 				  break;
