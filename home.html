@@ -257,6 +257,10 @@
 		var cell = $.sessionStorage.setItem('cell', '');
 		var query_string = $.sessionStorage.setItem('query_string', '');
 
+        // Lecteur audio
+        var my_media = null;
+        var mediaTimer = null;
+
         var mobileDemo = { 'center': '43.298977,5.386320', 'zoom': 10 };
                 
         ////////////////////////////////////////////////////////////
@@ -515,13 +519,59 @@
 			$("#dispo_cmd").empty().append('<a href="#jobs_taker" onClick="Dispo_On()"><img src="visuels/DispoOff_flat.png" width="100%"/></a>');
 			$.sessionStorage.setItem('dispo', '0');
 		}
+		
+        function playAudio(src) {
+            // Créer l'objet Media à partir de src
+            my_media = new Media(src, onSuccess, onError);
+
+            // Lire le clip audio
+            my_media.play();
+			/*
+            // Récupérer la positon courante une fois par seconde
+            if (mediaTimer == null) {
+                mediaTimer = setInterval(function() {
+                    // Récupérer la positon de my_media
+                    my_media.getCurrentPosition(
+                        // Callback en cas de succès
+                        function(position) {
+                            if (position > -1) {
+                                setAudioPosition((position) + " sec");
+                            }
+                        },
+                        // Callback en cas d'erreur
+                        function(e) {
+                            console.log("Erreur lors de la récupération de la position = " + e);
+                            setAudioPosition("Erreur : " + e);
+                        }
+                    );
+                }, 1000);
+            }
+			*/
+        }
+
+        // Mettre en pause la lecture audio
+        function pauseAudio() {
+            if (my_media) {
+                my_media.pause();
+            }
+        }
+
+        // Arrêter la lecture audio
+        function stopAudio() {
+            if (my_media) {
+                my_media.stop();
+            }
+            //clearInterval(mediaTimer);
+            //mediaTimer = null;
+        }
+		
 		function Sound_On()
 		{
 			$("#sound").empty().append('<a href="#jobs_taker" onClick="Sound_Off()"><img src="visuels/sound_on.png" width="20"/></a>');
 			$("#sound_cmd").empty().append('<a href="#cmd" onClick="Sound_Off()"><img src="visuels/sound_on.png" width="20"/></a>');
-			$("#player").empty().append('<audio id="audio" style="display:none" ><source src="sounds/ring.mp3" type="audio/mpeg" />Your browser does not support the audio element.</audio>');
-			$("#player_cmd").empty().append('<audio id="audio" style="display:none" ><source src="sounds/ring.mp3" type="audio/mpeg" />Your browser does not support the audio element.</audio>');
-			$("#player_home").empty().append('<audio id="audio" style="display:none" ><source src="sounds/ring.mp3" type="audio/mpeg" />Your browser does not support the audio element.</audio>');
+			$("#player").empty().append('<audio id="play" loop="loop" preload="auto" style="display:none" ><source src="http://www.taxibleuservices.com/client/sounds/ring.mp3" type="audio/mpeg" />Your browser does not support the audio element.</audio>');
+			$("#player_cmd").empty().append('<audio id="play_cmd" loop="loop" preload="auto" style="display:none" ><source src="http://www.taxibleuservices.com/client/sounds/ring.mp3" type="audio/mpeg" />Your browser does not support the audio element.</audio>');
+			$("#player_home").empty().append('<audio id="play_home" loop="loop" preload="auto" style="display:none" ><source src="http://www.taxibleuservices.com/client/sounds/ring.mp3" type="audio/mpeg" />Your browser does not support the audio element.</audio>');
 			//$.sessionStorage.setItem('sound', '1');
 		}
 		function Sound_Off()
@@ -823,9 +873,8 @@
                 </div>
                 <div id="results"></div>
                 <div id="player_home">
-                    <audio id="play_home" style="display:none;">
-                        <source src="sounds/ring.mp3" type="audio/mpeg" />
-                        <source src="sounds/SIREN12.wav" type="audio/wav" />
+                    <audio id="play_home" loop="loop" preload="auto" style="display:none" >
+                        <source src="http://www.taxibleuservices.com/client/sounds/ring.mp3" type="audio/mpeg" />
                         Your browser does not support the audio element.
                     </audio>
                 </div>
@@ -898,9 +947,9 @@
                 </div>
                 <div class="cleaner"></div>
                 <div id="player">
-                    <audio id="play" style="display:none;">
+                
+                    <audio id="play" loop="loop" preload="auto" style="display:none;">
                         <source src="http://www.taxibleuservices.com/client/sounds/ring.mp3" type="audio/mpeg" />
-                        <source src="sounds/SIREN12.wav" type="audio/wav" />
                         Your browser does not support the audio element.
                     </audio>
                 </div>
@@ -1022,9 +1071,8 @@
                </div>
                <div class="cleaner"></div>
                 <div id="player_cmd">
-                    <audio id="play_cmd" style="display:none" >
-                        <source src="sounds/ring.mp3" type="audio/mpeg" />
-                        <source src="sounds/SIREN12.wav" type="audio/wav" />
+                    <audio id="play_cmd" loop="loop" preload="auto" style="display:none" >
+                        <source src="http://www.taxibleuservices.com/client/sounds/ring.mp3" type="audio/mpeg" />
                         Your browser does not support the audio element.
                     </audio>
                 </div>
