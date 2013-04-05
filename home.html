@@ -446,12 +446,14 @@
 					$("#warn").empty().append('<a href="#jobs_taker"><img src="visuels/Alerte_course_flat.png" width="100%"/></a>');
 					$("#warn_home").empty().append('<a href="#jobs_taker"><img src="visuels/Alerte_course_flat.png" width="100%"/></a>');
 					document.getElementById("play").play();
+					document.getElementById("play_home").play();
 				}
 				else
 				{
 					$("#warn").empty().append('<a href="#jobs_taker"><img src="visuels/Aucune_course_flat.png" width="100%"/></a>');
 					$("#warn_home").empty().append('<a href="#jobs_taker"><img src="visuels/Aucune_course_flat.png" width="100%"/></a>');
 					document.getElementById("play").pause();
+					document.getElementById("play_home").pause();
 				}
 			});
 
@@ -519,6 +521,7 @@
 			$("#sound_cmd").empty().append('<a href="#cmd" onClick="Sound_Off()"><img src="visuels/sound_on.png" width="20"/></a>');
 			$("#player").empty().append('<audio id="audio" style="display:none" ><source src="sounds/ring.mp3" type="audio/mpeg" />Your browser does not support the audio element.</audio>');
 			$("#player_cmd").empty().append('<audio id="audio" style="display:none" ><source src="sounds/ring.mp3" type="audio/mpeg" />Your browser does not support the audio element.</audio>');
+			$("#player_home").empty().append('<audio id="audio" style="display:none" ><source src="sounds/ring.mp3" type="audio/mpeg" />Your browser does not support the audio element.</audio>');
 			//$.sessionStorage.setItem('sound', '1');
 		}
 		function Sound_Off()
@@ -527,6 +530,7 @@
 			$("#sound_cmd").empty().append('<a href="#cmd" onClick="Sound_On()"><img src="visuels/sound_off.png" width="20"/></a>');
 			$("#player").empty();
 			$("#player_cmd").empty();
+			$("#player_home").empty();
 			//$.sessionStorage.setItem('sound', '0');
 		}
 		function footer()
@@ -818,6 +822,13 @@
                     <!-- N&rsquo;oubliez pas de vous rendre indisponible quand vous ne d&eacute;sirez plus prendre de courses, cela vous &eacute;vitera d&rsquo;&ecirc;tre importun&eacute; durant votre repos.<br> -->
                 </div>
                 <div id="results"></div>
+                <div id="player_home">
+                    <audio id="play_home" style="display:none;">
+                        <source src="sounds/ring.mp3" type="audio/mpeg" />
+                        <source src="sounds/SIREN12.wav" type="audio/wav" />
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
                 <a href="#homepanel" id="homepanel_poper"></a>
             </div>
             <div data-theme="a" data-role="footer" id="footer_cont0" data-position="fixed">
@@ -887,8 +898,9 @@
                 </div>
                 <div class="cleaner"></div>
                 <div id="player">
-                    <audio id="play" style="display:none;" >
+                    <audio id="play" style="display:none;">
                         <source src="sounds/ring.mp3" type="audio/mpeg" />
+                        <source src="sounds/SIREN12.wav" type="audio/wav" />
                         Your browser does not support the audio element.
                     </audio>
                 </div>
@@ -1012,6 +1024,7 @@
                 <div id="player_cmd">
                     <audio id="play_cmd" style="display:none" >
                         <source src="sounds/ring.mp3" type="audio/mpeg" />
+                        <source src="sounds/SIREN12.wav" type="audio/wav" />
                         Your browser does not support the audio element.
                     </audio>
                 </div>
