@@ -445,13 +445,13 @@
 				{
 					$("#warn").empty().append('<a href="#jobs_taker"><img src="visuels/Alerte_course_flat.png" width="100%"/></a>');
 					$("#warn_home").empty().append('<a href="#jobs_taker"><img src="visuels/Alerte_course_flat.png" width="100%"/></a>');
-					document.getElementById("audio").play();
+					document.getElementById("play").play();
 				}
 				else
 				{
 					$("#warn").empty().append('<a href="#jobs_taker"><img src="visuels/Aucune_course_flat.png" width="100%"/></a>');
 					$("#warn_home").empty().append('<a href="#jobs_taker"><img src="visuels/Aucune_course_flat.png" width="100%"/></a>');
-					document.getElementById("audio").pause();
+					document.getElementById("play").pause();
 				}
 			});
 
@@ -460,12 +460,12 @@
 				if (data != 0)
 				{
 					$("#warn_cmd").empty().append('<img src="visuels/Alerte_course_flat.png" width="100%"/>');
-					document.getElementById("audio").play();
+					document.getElementById("play_cmd").play();
 				}
 				else
 				{
 					$("#warn_cmd").empty().append('<a href="#jobs_taker"><img src="visuels/Aucune_course_flat.png" width="100%"/></a>');
-					document.getElementById("audio").pause();
+					document.getElementById("play_cmd").pause();
 				}
 			});
 
@@ -887,7 +887,7 @@
                 </div>
                 <div class="cleaner"></div>
                 <div id="player">
-                    <audio id="audio" style="display:none;" >
+                    <audio id="play" style="display:none;" >
                         <source src="sounds/ring.mp3" type="audio/mpeg" />
                         Your browser does not support the audio element.
                     </audio>
@@ -1010,7 +1010,7 @@
                </div>
                <div class="cleaner"></div>
                 <div id="player_cmd">
-                    <audio id="audio" style="display:none" >
+                    <audio id="play_cmd" style="display:none" >
                         <source src="sounds/ring.mp3" type="audio/mpeg" />
                         Your browser does not support the audio element.
                     </audio>
