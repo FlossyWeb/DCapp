@@ -309,7 +309,6 @@
                                         $('#from').val(results[0].formatted_address);
 										var rdv = $.sessionStorage.getItem('rdv');
 										//document.getElementById('to').value = rdv;
-										$('#to').val(rdv);
 										if (rdv != '')
 										{
 											$('#submit').trigger('click');
@@ -385,10 +384,9 @@
         {
             if (navigator.geolocation)
             {
-                //navigator.geolocation.getCurrentPosition(get_coords, showError,{enableHighAccuracy:true, maximumAge:Infinity});
-                //navigator.geolocation.getCurrentPosition(get_coords, showError,{enableHighAccuracy:true, timeout:60000, maximumAge:0});
-                //navigator.geolocation.getCurrentPosition(get_coords, showError,{enableHighAccuracy:true});
-				navigator.geolocation.getCurrentPosition(get_coords, showError, {enableHighAccuracy:true, maximumAge:0});
+                navigator.geolocation.getCurrentPosition(get_coords, showError,{enableHighAccuracy:true, maximumAge:0});
+				//var watchId = navigator.geolocation.watchPosition(get_coords, showError);
+				//navigator.geolocation.getAccurateCurrentPosition(get_coords, showError, {maxWait:30000});
             }
             else {
 				alert("Localisation impossible.");
@@ -421,9 +419,7 @@
 				  x.innerHTML="Location information is unavailable."
 				  break;
 				case error.TIMEOUT:
-					//navigator.geolocation.getCurrentPosition(get_coords, showError,{enableHighAccuracy:false, timeout:10000, maximumAge:Infinity});
 				  x.innerHTML="The request to get user location timed out."
-				  
 				  break;
 				case error.UNKNOWN_ERROR:
 				  x.innerHTML="An unknown error occurred."
@@ -618,7 +614,7 @@
 
 		function taximedia()
 		{
-			window.plugins.childBrowser.showWebPage('http://www.taximedia.fr/crbst_7.html', { showLocationBar: true });
+			window.plugins.childBrowser.showWebPage('http://www.taximedia.fr', { showLocationBar: true });
 		}
 		/*
 		// Swiping between pages function
@@ -672,13 +668,7 @@
 		$('#directions_map').live("swiperight", function() {
 			$("#mapPanel_poper").trigger('click');
 		});
-		/*			
-		document.addEventListener("deviceready", onDeviceReady, false);
-		function onDeviceReady() {
-			// L'API PhoneGap est maintenant utilisable sans risque.
-			getLocation();
-		}
-		*/
+					
 		$(document).bind( 'pageinit', function() {
 		
 			if(!$.sessionStorage.getItem('pass'))
@@ -751,6 +741,7 @@
                   <li><a href="#planning" data-transition="slide"><b>Planning</b></a></li>
                   <li><a href="#manage" data-transition="slide"><b>Mon compte</b></a></li>
                   <li><a href="#directions_map" data-transition="slide"><b>Carte GPS</b></a></li>
+                  <li><a href="#" onClick="taximedia()" data-transition="slide"><b>TaxiMedia.fr</b></a></li>
                   <li><a href="#infos" data-transition="slide"><b>Infos DCVP</b></a></li>
                 </ul>
                 <a href="#home" data-rel="close" data-role="button" data-theme="a">Fermer</a>
@@ -846,6 +837,7 @@
                   <li><a href="#planning" data-transition="slide"><b>Planning</b></a></li>
                   <li><a href="#manage" data-transition="slide"><b>Mon compte</b></a></li>
                   <li><a href="#directions_map" data-transition="slide"><b>Carte GPS</b></a></li>
+                  <li><a href="#" onClick="taximedia()" data-transition="slide"><b>TaxiMedia.fr</b></a></li>
                   <li><a href="#infos" data-transition="slide"><b>Infos DCVP</b></a></li>
                 </ul>
                 <a href="#jobs_taker" data-rel="close" data-role="button" data-theme="a">Fermer</a>
@@ -895,7 +887,7 @@
                 </div>
                 <div class="cleaner"></div>
                 <div id="player">
-                    <audio id="audio" style="display:none" >
+                    <audio id="audio" style="display:none;" >
                         <source src="sounds/ring.mp3" type="audio/mpeg" />
                         Your browser does not support the audio element.
                     </audio>
@@ -918,6 +910,7 @@
                   <li><a href="#planning" data-transition="slide"><b>Planning</b></a></li>
                   <li><a href="#manage" data-transition="slide"><b>Mon compte</b></a></li>
                   <li><a href="#directions_map" data-transition="slide"><b>Carte GPS</b></a></li>
+                  <li><a href="#" onClick="taximedia()" data-transition="slide"><b>TaxiMedia.fr</b></a></li>
                   <li><a href="#infos" data-transition="slide"><b>Infos DCVP</b></a></li>
                 </ul>
                 <a href="#delayPop" data-rel="close" data-role="button" data-theme="a">Fermer</a>
@@ -933,7 +926,8 @@
                 <div class="ui-bar-a ui-corner-all ui-shadow" style="padding:1em;">
                     <label for="delay">Temps d&rsquo;approche : </label>
                     <select name="delay" id="delay" data-theme="b">
-                        <option selected value="5">5 minutes</option>
+                        <option selected value="0">d&eacute;lai</option>
+                        <option value="5">5 minutes</option>
                         <option value="10">10 minutes</option>
                         <option value="15">15 minutes</option>
                         <option value="30">30 minutes</option>
@@ -963,6 +957,7 @@
                   <li><a href="#planning" data-transition="slide"><b>Planning</b></a></li>
                   <li><a href="#manage" data-transition="slide"><b>Mon compte</b></a></li>
                   <li><a href="#directions_map" data-transition="slide"><b>Carte GPS</b></a></li>
+                  <li><a href="#" onClick="taximedia()" data-transition="slide"><b>TaxiMedia.fr</b></a></li>
                   <li><a href="#infos" data-transition="slide"><b>Infos DCVP</b></a></li>
                 </ul>
                 <a href="#cmd" data-rel="close" data-role="button" data-theme="a">Fermer</a>
@@ -1038,6 +1033,7 @@
                   <li><a href="#planning" data-transition="slide"><b>Planning</b></a></li>
                   <li><a href="#manage" data-transition="slide"><b>Mon compte</b></a></li>
                   <li><a href="#directions_map" data-transition="slide"><b>Carte GPS</b></a></li>
+                  <li><a href="#" onClick="taximedia()" data-transition="slide"><b>TaxiMedia.fr</b></a></li>
                   <li><a href="#infos" data-transition="slide"><b>Infos DCVP</b></a></li>
                 </ul>
                 <a href="#planning" data-rel="close" data-role="button" data-theme="a">Fermer</a>
@@ -1075,6 +1071,7 @@
                   <li><a href="#planning" data-transition="slide"><b>Planning</b></a></li>
                   <li><a href="#manage" data-transition="slide"><b>Mon compte</b></a></li>
                   <li><a href="#directions_map" data-transition="slide"><b>Carte GPS</b></a></li>
+                  <li><a href="#" onClick="taximedia()" data-transition="slide"><b>TaxiMedia.fr</b></a></li>
                   <li><a href="#infos" data-transition="slide"><b>Infos DCVP</b></a></li>
                 </ul>
                 <a href="#history" data-rel="close" data-role="button" data-theme="a">Fermer</a>
@@ -1112,6 +1109,7 @@
                   <li><a href="#planning" data-transition="slide"><b>Planning</b></a></li>
                   <li><a href="#manage" data-transition="slide"><b>Mon compte</b></a></li>
                   <li><a href="#directions_map" data-transition="slide"><b>Carte GPS</b></a></li>
+                  <li><a href="#" onClick="taximedia()" data-transition="slide"><b>TaxiMedia.fr</b></a></li>
                   <li><a href="#infos" data-transition="slide"><b>Infos DCVP</b></a></li>
                 </ul>
                 <a href="#infos" data-rel="close" data-role="button" data-theme="a">Fermer</a>
@@ -1142,6 +1140,7 @@
                   <li><a href="#planning" data-transition="slide"><b>Planning</b></a></li>
                   <li><a href="#manage" data-transition="slide"><b>Mon compte</b></a></li>
                   <li><a href="#directions_map" data-transition="slide"><b>Carte GPS</b></a></li>
+                  <li><a href="#" onClick="taximedia()" data-transition="slide"><b>TaxiMedia.fr</b></a></li>
                   <li><a href="#infos" data-transition="slide"><b>Infos DCVP</b></a></li>
                 </ul>
                 <a href="#manage" data-rel="close" data-role="button" data-theme="a">Fermer</a>
@@ -1300,6 +1299,7 @@
                   <li><a href="#planning" data-transition="slide"><b>Planning</b></a></li>
                   <li><a href="#manage" data-transition="slide"><b>Mon compte</b></a></li>
                   <li><a href="#directions_map" data-transition="slide"><b>Carte GPS</b></a></li>
+                  <li><a href="#" onClick="taximedia()" data-transition="slide"><b>TaxiMedia.fr</b></a></li>
                   <li><a href="#infos" data-transition="slide"><b>Infos DCVP</b></a></li>
                 </ul>
                 <a href="#manage" data-rel="close" data-role="button" data-theme="a">Fermer</a>
@@ -1344,6 +1344,7 @@
                   <li><a href="#planning" data-transition="slide"><b>Planning</b></a></li>
                   <li><a href="#manage" data-transition="slide"><b>Mon compte</b></a></li>
                   <li><a href="#directions_map" data-transition="slide"><b>Carte GPS</b></a></li>
+                  <li><a href="#" onClick="taximedia()" data-transition="slide"><b>TaxiMedia.fr</b></a></li>
                   <li><a href="#infos" data-transition="slide"><b>Infos DCVP</b></a></li>
                 </ul>
                 <a href="#toolate" data-rel="close" data-role="button" data-theme="a">Fermer</a>
