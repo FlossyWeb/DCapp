@@ -43,10 +43,6 @@
     <icon src="icon.png" />
 	<gap:splash src="splash.png" />
 	
-	<access origin="http://taxibleuservices.com" subdomains="true" />
-	<access origin="https://ssl14.ovh.net/~taxibleu/" subdomains="true" />
-	<access origin="http://jquery.com" subdomains="true" />
-	<access origin="http://google.com" subdomains="true" />
-	<access origin="http://github.com" subdomains="true" />
-
+	<access origin="*" />
+	
 </widget>
