@@ -29,6 +29,8 @@
     <preference name="fullscreen"       value="false" />
 	<preference name="stay-in-webview" value="true" />
 	<preference name="ios-statusbarstyle" value="black-opaque" />
+	<preference name="prerendered-icon" value="true" />
+	<preference name="show-splash-screen-spinner" value="false" />
 
 	<gap:plugin name="ChildBrowser" />
 	<gap:plugin name="BarcodeScanner" />
