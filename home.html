@@ -670,6 +670,14 @@
 		{
 			window.plugins.childBrowser.showWebPage('http://www.taximedia.fr', { showLocationBar: true });
 		}
+		function help()
+		{
+			window.plugins.childBrowser.showWebPage('http://taxibleuservices.com/client/help.html', { showLocationBar: true });
+		}
+		function cgv()
+		{
+			window.plugins.childBrowser.showWebPage('http://taxibleuservices.com/client/docs/CGV.pdf', { showLocationBar: true });
+		}
 		/*
 		// Swiping between pages function
 		$('div.ui-page').live("swipeleft", function(){
@@ -795,6 +803,7 @@
                   <li><a href="#planning" data-transition="slide"><b>Planning</b></a></li>
                   <li><a href="#manage" data-transition="slide"><b>Mon compte</b></a></li>
                   <li><a href="#directions_map" data-transition="slide"><b>Carte GPS</b></a></li>
+                  <li><a href="#" onClick="help()" data-transition="slide"><b>Aide utilisateur</b></a></li>
                   <li><a href="#" onClick="taximedia()" data-transition="slide"><b>TaxiMedia.fr</b></a></li>
                   <li><a href="#infos" data-transition="slide"><b>Infos DCVP</b></a></li>
                 </ul>
@@ -833,7 +842,7 @@
                     		Planning
                         </p>
                     </a>
-					<a href="#" onClick="alert('En construction...')" data-transition="slide" style="width:32%;display:inline-block;">
+					<a href="#" onClick="help()" data-transition="slide" style="width:32%;display:inline-block;">
                     	<p style="font-size: x-small;color:#FFF;">
                             <img src="visuels/Help_flat.png" width="90%"/><br>
                             Aide utilisateur
@@ -897,6 +906,7 @@
                   <li><a href="#planning" data-transition="slide"><b>Planning</b></a></li>
                   <li><a href="#manage" data-transition="slide"><b>Mon compte</b></a></li>
                   <li><a href="#directions_map" data-transition="slide"><b>Carte GPS</b></a></li>
+                  <li><a href="#" onClick="help()" data-transition="slide"><b>Aide utilisateur</b></a></li>
                   <li><a href="#" onClick="taximedia()" data-transition="slide"><b>TaxiMedia.fr</b></a></li>
                   <li><a href="#infos" data-transition="slide"><b>Infos DCVP</b></a></li>
                 </ul>
@@ -971,6 +981,7 @@
                   <li><a href="#planning" data-transition="slide"><b>Planning</b></a></li>
                   <li><a href="#manage" data-transition="slide"><b>Mon compte</b></a></li>
                   <li><a href="#directions_map" data-transition="slide"><b>Carte GPS</b></a></li>
+                  <li><a href="#" onClick="help()" data-transition="slide"><b>Aide utilisateur</b></a></li>
                   <li><a href="#" onClick="taximedia()" data-transition="slide"><b>TaxiMedia.fr</b></a></li>
                   <li><a href="#infos" data-transition="slide"><b>Infos DCVP</b></a></li>
                 </ul>
@@ -1018,6 +1029,7 @@
                   <li><a href="#planning" data-transition="slide"><b>Planning</b></a></li>
                   <li><a href="#manage" data-transition="slide"><b>Mon compte</b></a></li>
                   <li><a href="#directions_map" data-transition="slide"><b>Carte GPS</b></a></li>
+                  <li><a href="#" onClick="help()" data-transition="slide"><b>Aide utilisateur</b></a></li>
                   <li><a href="#" onClick="taximedia()" data-transition="slide"><b>TaxiMedia.fr</b></a></li>
                   <li><a href="#infos" data-transition="slide"><b>Infos DCVP</b></a></li>
                 </ul>
@@ -1094,6 +1106,7 @@
                   <li><a href="#planning" data-transition="slide"><b>Planning</b></a></li>
                   <li><a href="#manage" data-transition="slide"><b>Mon compte</b></a></li>
                   <li><a href="#directions_map" data-transition="slide"><b>Carte GPS</b></a></li>
+                  <li><a href="#" onClick="help()" data-transition="slide"><b>Aide utilisateur</b></a></li>
                   <li><a href="#" onClick="taximedia()" data-transition="slide"><b>TaxiMedia.fr</b></a></li>
                   <li><a href="#infos" data-transition="slide"><b>Infos DCVP</b></a></li>
                 </ul>
@@ -1132,7 +1145,8 @@
                   <li><a href="#planning" data-transition="slide"><b>Planning</b></a></li>
                   <li><a href="#manage" data-transition="slide"><b>Mon compte</b></a></li>
                   <li><a href="#directions_map" data-transition="slide"><b>Carte GPS</b></a></li>
-                  <li><a href="#" onClick="taximedia()" data-transition="slide"><b>TaxiMedia.fr</b></a></li>
+                   <li><a href="#" onClick="help()" data-transition="slide"><b>Aide utilisateur</b></a></li>
+                 <li><a href="#" onClick="taximedia()" data-transition="slide"><b>TaxiMedia.fr</b></a></li>
                   <li><a href="#infos" data-transition="slide"><b>Infos DCVP</b></a></li>
                 </ul>
                 <a href="#history" data-rel="close" data-role="button" data-theme="a">Fermer</a>
@@ -1170,6 +1184,7 @@
                   <li><a href="#planning" data-transition="slide"><b>Planning</b></a></li>
                   <li><a href="#manage" data-transition="slide"><b>Mon compte</b></a></li>
                   <li><a href="#directions_map" data-transition="slide"><b>Carte GPS</b></a></li>
+                  <li><a href="#" onClick="help()" data-transition="slide"><b>Aide utilisateur</b></a></li>
                   <li><a href="#" onClick="taximedia()" data-transition="slide"><b>TaxiMedia.fr</b></a></li>
                   <li><a href="#infos" data-transition="slide"><b>Infos DCVP</b></a></li>
                 </ul>
@@ -1201,6 +1216,7 @@
                   <li><a href="#planning" data-transition="slide"><b>Planning</b></a></li>
                   <li><a href="#manage" data-transition="slide"><b>Mon compte</b></a></li>
                   <li><a href="#directions_map" data-transition="slide"><b>Carte GPS</b></a></li>
+                  <li><a href="#" onClick="help()" data-transition="slide"><b>Aide utilisateur</b></a></li>
                   <li><a href="#" onClick="taximedia()" data-transition="slide"><b>TaxiMedia.fr</b></a></li>
                   <li><a href="#infos" data-transition="slide"><b>Infos DCVP</b></a></li>
                 </ul>
@@ -1339,6 +1355,12 @@
                             </form>
                             </fieldset>
                         </div>
+                        <div data-role="collapsible" data-collapsed="true">
+                            <h1>
+                                CGV 
+                            </h1>
+                            <a href="#" onClick="cgv()" data-transition="slide"><b>Aide utilisateur</b></a>
+                        </div>
                     </div>
                 </div>
                 <div id="returns"></div>
@@ -1360,6 +1382,7 @@
                   <li><a href="#planning" data-transition="slide"><b>Planning</b></a></li>
                   <li><a href="#manage" data-transition="slide"><b>Mon compte</b></a></li>
                   <li><a href="#directions_map" data-transition="slide"><b>Carte GPS</b></a></li>
+                  <li><a href="#" onClick="help()" data-transition="slide"><b>Aide utilisateur</b></a></li>
                   <li><a href="#" onClick="taximedia()" data-transition="slide"><b>TaxiMedia.fr</b></a></li>
                   <li><a href="#infos" data-transition="slide"><b>Infos DCVP</b></a></li>
                 </ul>
@@ -1405,6 +1428,7 @@
                   <li><a href="#planning" data-transition="slide"><b>Planning</b></a></li>
                   <li><a href="#manage" data-transition="slide"><b>Mon compte</b></a></li>
                   <li><a href="#directions_map" data-transition="slide"><b>Carte GPS</b></a></li>
+                  <li><a href="#" onClick="help()" data-transition="slide"><b>Aide utilisateur</b></a></li>
                   <li><a href="#" onClick="taximedia()" data-transition="slide"><b>TaxiMedia.fr</b></a></li>
                   <li><a href="#infos" data-transition="slide"><b>Infos DCVP</b></a></li>
                 </ul>
