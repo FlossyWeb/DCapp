@@ -23,7 +23,7 @@
             media="(device-width: 320px) and (device-height: 568px)
             and (-webkit-device-pixel-ratio: 2)"
             href="visuels/startup_image_i5.png">
-    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.0/jquery.mobile-1.3.0.min.css" />
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.css" />
     <link type="text/css" rel="stylesheet" href="css/mobile.css" />
     <script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false&libraries=places"></script>
     <!-- <script src="http://code.jquery.com/jquery-1.8.2.min.js"></script> -->
@@ -36,7 +36,7 @@
             $.mobile.allowCrossDomainPages = true;
         });
     </script>    
-    <script src="http://code.jquery.com/mobile/1.3.0/jquery.mobile-1.3.0.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.js"></script>
     <script src="phonegap.js"></script>
 	<script src="phonegap.js"></script>
     <script src="childbrowser.js"></script>
@@ -46,7 +46,8 @@
     <script src="cdv-plugin-fb-connect.js"></script>
     <script src="facebook-js-sdk.js"></script>
     <!-- 
-    <script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script> 
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.0/jquery.mobile-1.3.0.min.css" />
+    <script src="http://code.jquery.com/mobile/1.3.0/jquery.mobile-1.3.0.min.js"></script>
     <script type="text/javascript" src="js/marquee.js"></script>
     -->
     <script type="text/javascript" src="js/jquery.html5storage.min.js"></script>
@@ -264,7 +265,9 @@
         var mobileDemo = { 'center': '43.298977,5.386320', 'zoom': 10 };
                 
         ////////////////////////////////////////////////////////////
-		$( '#directions_map' ).live( 'pagebeforecreate',function(event){
+		//$(document).on( 'pagebeforecreate', '#directions_map', function() {
+		$( '#directions_map' ).live( 'pagebeforeshow',function(event){
+			$("#infos_map").empty();
 			var idcourse = $.sessionStorage.getItem('idcourse');
 			var rdv = $.sessionStorage.getItem('rdv');
 			var com = $.sessionStorage.getItem('com');
@@ -345,25 +348,25 @@
 			$("#late_cont").empty().append(late);			
 		});
         
-		$( '#planning' ).live( 'pagebeforecreate',function(event){
+		$( '#planning' ).live( 'pagebeforeshow',function(event){
 			$.post("https://ssl14.ovh.net/~taxibleu/client/in_app_calls.php", { planning: 'true', taxi: taxi, pass: pass }, function(data){
-				$("#plan_cont").append(data);
+				$("#plan_cont").empty().append(data);
 				$("#plan_cont").trigger('create');
 				//alert(data);
 			});
 		});
 
-		$( '#history' ).live( 'pagebeforecreate',function(event){
+		$( '#history' ).live( 'pagebeforeshow',function(event){
 			$.post("https://ssl14.ovh.net/~taxibleu/client/in_app_calls.php", { history: 'true', taxi: taxi, pass: pass }, function(data){
-				$("#hist_cont").append(data);
+				$("#hist_cont").empty().append(data);
 				$("#hist_cont").trigger('create');
 				//alert(data);
 			});
 		});
 
-		$( '#infos' ).live( 'pagebeforecreate',function(event){
+		$( '#infos' ).live( 'pagebeforeshow',function(event){
 			$.post("https://ssl14.ovh.net/~taxibleu/client/in_app_calls.php", { infos: 'true', pass: pass }, function(data){
-				$("#infos_cont").append(data);
+				$("#infos_cont").empty().append(data);
 				$("#infos_cont").trigger('create');
 				//alert(data);
 			});
@@ -1359,7 +1362,8 @@
                             <h1>
                                 CGV 
                             </h1>
-                            <a href="#" onClick="cgv()" data-role="button" data-icon="edit" data-transition="slide"><b>Consulter les CGV</b></a>
+                            <a href="#" onClick="cgv()" data-theme="b" data-role="button" data-icon="info" data-transition="slide"><b>Consulter les CGV</b></a>
+                            <a href="http://taxibleuservices.com/client/docs/CGV.pdf" data-theme="b" data-role="button" data-icon="edit" data-transition="slide"><b>T&eacute;l&eacute;charger les CGV</b></a>
                         </div>
                     </div>
                 </div>
