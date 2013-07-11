@@ -39,6 +39,7 @@
 	<gap:plugin name="GenericPush" />
 	<gap:plugin name="FacebookConnect">
 		<param name="APP_ID" value="498866156839917" />
+		<param name="APP_NAME" value="ContosoMobile" />
 	</gap:plugin>
 
     <icon src="icon.png" />
