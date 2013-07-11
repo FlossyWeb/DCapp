@@ -255,6 +255,7 @@
 		var prenom = $.localStorage.getItem('prenom');
 		var siret = $.localStorage.getItem('siret');
 		var station = $.localStorage.getItem('station');
+		var group = $.localStorage.getItem('group');
 		var mngid = $.localStorage.getItem('mngid');
 		var pass = $.sessionStorage.getItem('pass');
 		var idcourse = $.sessionStorage.setItem('idcourse', '');
@@ -455,7 +456,7 @@
 		function update()
 		{
 			var dispo = $.sessionStorage.getItem('dispo');
-			$.post("https://ssl14.ovh.net/~taxibleu/server/get_app_drive.php", { taxi: taxi, tel: tel, email: email, dispo: dispo, pass: pass, mngid: mngid }, function(data){ 
+			$.post("https://ssl14.ovh.net/~taxibleu/server/get_app_drive.php", { taxi: taxi, tel: tel, email: email, dispo: dispo, pass: pass, mngid: mngid, group: group }, function(data){ 
 				$("#screen_job").empty().append(data);
 				if (data != 0)
 				{
@@ -473,7 +474,7 @@
 				}
 			});
 
-			$.post("https://ssl14.ovh.net/~taxibleu/server/get_app_drive.php?cmd=1", { taxi: taxi, tel: tel, email: email, dispo: dispo, pass: pass, mngid: mngid }, function(data){ 
+			$.post("https://ssl14.ovh.net/~taxibleu/server/get_app_drive.php?cmd=1", { taxi: taxi, tel: tel, email: email, dispo: dispo, pass: pass, mngid: mngid, group: group }, function(data){ 
 				$("#screen_job_cmd").empty().append(data);
 				if (data != 0)
 				{
@@ -1020,7 +1021,7 @@
                 <div class="ui-bar-a ui-corner-all ui-shadow" style="padding:1em;">
                     <label for="delay">Temps d&rsquo;approche : </label>
                     <select name="delay" id="delay" data-theme="b">
-                        <option selected value="0">d&eacute;lai</option>
+                        <option selected value="7">d&eacute;lai</option>
                         <option value="5">5 minutes</option>
                         <option value="10">10 minutes</option>
                         <option value="15">15 minutes</option>
@@ -1419,7 +1420,7 @@
                 <a href="#manage" data-rel="close" data-role="button" data-theme="a">Fermer</a>
             </div><!-- /panel -->
 			<div data-role="header">
-            	<a href="#home" data-rel="back" data-transition="slide" style="color:#FFF;"><h1><b>Retour</b></h1></a>
+            	<a href="#home" data-transition="slide" style="color:#FFF;"><h1><b>Retour</b></h1></a>
                 <a href="#map_panel" id="mapPanel_poper" data-role="button" data-iconpos="left" data-icon="home" data-transition="slide" data-inline="true" data-theme="b"><h1><b>Menu</b></h1></a>
 			</div>
             <div class="spacer"></div><div class="spacer"></div><div class="spacer"></div>
