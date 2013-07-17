@@ -338,9 +338,9 @@
                                 </select>
                                 <input type="text" name="nom" placeholder="Nom" maxlength="60" size="20" class="required"><em></em>
                                 <input type="text" name="prenom" placeholder="Pr&eacute;nom" maxlength="60" size="20" class="required"><em></em>	
-                                <input type="number" name="taxi" placeholder="Num&eacute;ro de taxi" maxlength="60" size="20" class="required">
-                                <input type="number" name="tel" placeholder="T&eacute;l&eacute;phone (Sans espace SVP)" maxlength="10" size="20" class="required"><em></em>
-                                <input type="number" name="siret" placeholder="N&deg; SIRET (14 chiffres sans espace SVP)" maxlength="14" size="20" class="required"><em></em>
+                                <input type="text" name="taxi" placeholder="Num&eacute;ro de taxi" maxlength="60" size="20" class="required">
+                                <input type="tel" name="tel" placeholder="T&eacute;l&eacute;phone (Sans espace SVP)" maxlength="10" size="20" class="required"><em></em>
+                                <input type="text" name="siret" placeholder="N&deg; SIRET (14 chiffres sans espace SVP)" maxlength="14" size="20" class="required"><em></em>
                                 <input type="text" name="station" placeholder="Commune de stationnement" maxlength="60" size="20" class="required"><em></em>
                                 <select name="type" id="type">
                                     <option selected value="">Type de vehicule</option>
@@ -449,7 +449,7 @@
                             </h1>
                             <fieldset><legend></legend>
                             <form  action="/" method="post" name="id" id="login" data-ajax="false" data-transition="slidefade">
-                                <input type="number" name="log" size="20" maxlength="10" placeholder="Identifiant"/>
+                                <input type="tel" name="log" size="20" maxlength="10" placeholder="Identifiant"/>
                                 <input type="password" name="pass" size="20" maxlength="16" placeholder="Mot de Passe"/>
                                 <input type="submit" id="subLog" value=" Connection "/>
                             </form>
@@ -461,7 +461,7 @@
                             </h1>
                             <fieldset><legend></legend>
                             <form  action="/" method="post" name="forget" id="forget" data-ajax="false" data-transition="slidefade">
-                                <input type="number" name="login" size="20" maxlength="10" placeholder="Identifiant"/>
+                                <input type="tel" name="login" size="20" maxlength="10" placeholder="Identifiant"/>
                                 <input type="email" name="mail" size="32" maxlength="60" placeholder="L&rsquo;email de votre compte"/>
                                  <input type="hidden" name="dep" value="13"/>
                                 <input type="submit" id="subFor" value=" Envoyer "/>
