@@ -196,6 +196,7 @@
 
 				if($.sessionStorage.getItem('pass'))
 				{
+					$.mobile.loading( "show" );
 					document.location.href='home.html';
 					//$.mobile.changePage( "test.html", { transition: "slide"} );
 				}
@@ -235,6 +236,7 @@
 						$("#returns").empty().append(display);
 						if(data.pass)
 						{ // IDENTIFIED SO GETS IN...
+							$.mobile.loading( "show" );
 							document.location.href='home.html';
 							//$.mobile.changePage( "test.html", { transition: "slide"} );
 						}
