@@ -284,29 +284,29 @@
 			//document.getElementById('to').value = rdv;
 			$('#to').val(rdv);
 
+			if (rdv != '')
+			{
+				$.post("https://ssl14.ovh.net/~taxibleu/client/in_app_calls.php", { map: 'true', cmd: cmd, rdv: rdv, com: com, idcourse: idcourse, cell: cell, pass: pass }, function(data){
+					$("#infos_map").append(data);
+					//alert(data);
+				});
+			}
 			var infos = '<p>';
+			if (cell != '')
+			{
+				infos += '<a data-ajax="false" href="tel:' + cell + '" data-role="button" data-icon="grid">Joindre le client</a>';
+			}
 			if (com != '')
 			{
-				infos += '<b>Infos RDV : <span style="color:#09F;">' + com + '</span></b></br>';
+				infos += '<b>Infos RDV : <span style="color:#09F;">' + com + '</span></b>';
 			}
 			if (idcourse != '')
 			{
 				infos += '<br>N&deg; de course : <b>' + idcourse + '</b>';
 			}
-			if (cell != '')
-			{
-				infos += '<a data-ajax="false" href="tel:' + cell + '" data-role="button" data-icon="grid">Joindre le client</a>';
-			}
 			infos += '</p>';
 			$("#infos_map").append(infos);			
-			if (rdv != '')
-			{
-				$.post("https://ssl14.ovh.net/~taxibleu/client/in_app_calls.php", { map: 'true', cmd: cmd, rdv: rdv, com: com, idcourse: idcourse, cell: cell, pass: pass }, function(data){
-					$("#infos_map").append(data);
-					$("#infos_map").trigger('create');
-					//alert(data);
-				});
-			}
+			$("#infos_map").trigger('create');
 		});
 
         $('#directions_map').live('pageinit', function() {
@@ -624,8 +624,8 @@
 			var title = "Course en commande";
 			var location = rdv;
 			var notes = 'Infos RDV : ' + com + ' - Identifiant de la course : ' + idcourse + ' - Tel client : ' + cell;
-			var success = function(message) { alert("Success: " + JSON.stringify(message)); };
-			var error = function(message) { alert("Erreurr: " + message); };
+			var success = function(message) { alert("AJOUT EVENEMENT AU CALENDRIER: " + JSON.stringify(message)); };
+			var error = function(message) { alert("Erreur: " + message); };
 			// create
 			window.plugins.calendar.createEvent(title,location,notes,startDate,endDate,success,error);
 		}
@@ -737,6 +737,61 @@
 			//window.open('http://taxibleuservices.com/client/docs/CGV.pdf','_blank','location=yes');
 		}
 		
+		var scanSuccess = function (result) {
+			var textFormats = "QR_CODE DATA_MATRIX";
+			var productFormats = "UPC_E UPC_A EAN_8 EAN_13";
+			if (result.cancelled) { return; }
+			var what = "Code bar / QrCode\n" +
+				"Resultat: " + result.text + "\n" +
+				"Format: " + result.format;
+			$("#returns").empty().append(what);
+			if (textFormats.match(result.format)) {                
+				var scanVal = result.text;
+				if (scanVal.indexOf("http") === 0) {
+					navigator.notification.confirm(
+							'(1) Ouvrir \n(2) Annuler',
+							function (b) {
+								if (b === 1) {
+									window.plugins.childBrowser.showWebPage(result.text, { showLocationBar: true });
+								}
+							},
+							result.text,
+							'1, 2'
+					);
+				} else {
+					navigator.notification.alert(
+							result.text,
+							function (){},
+							'Scan Value:',
+							'Done'
+						);
+				}
+			} else if (productFormats.match(result.format)) {
+				navigator.notification.confirm(
+					'(1) Rechercher le produit\n(2) Annuler',
+					function (b) {
+					  if (b === 1) {
+						  // This is an example url with query - substitute your own here
+						  var searchUrl = "https://www.google.fr/#q=" + result.text;
+						  window.plugins.childBrowser.showWebPage(searchUrl, { showLocationBar: true });
+					  }
+					},
+					result.text,
+					'1, 2' 
+				);
+			} else { alert("Format du scan: " + result.format + 
+					  " NON SUPPORTE. Valeur du scan: " + result.text);
+			}
+		}
+		function goScan ()
+		{
+			window.plugins.barcodeScanner.scan(
+				scanSuccess, 
+				function (error) {
+					alert("Scan Erreur: " + error);
+				}
+			);
+		}
 	    // Attendre que PhoneGap soit prêt	    //
 	    document.addEventListener("deviceready", onDeviceReady, false);
 	
@@ -1432,7 +1487,7 @@
                             </h1>
                             <div id="billing">
                             </div>
-                       </div>
+                        </div>
                         <div data-role="collapsible" data-collapsed="true">
                             <h1>
                                 CGV 
@@ -1441,6 +1496,7 @@
                             <a href="http://taxibleuservices.com/client/docs/CGV.pdf" target="_blank" data-theme="b" data-role="button" data-icon="edit" data-transition="slide"><b>T&eacute;l&eacute;charger les CGV</b></a>
                         </div>
                     </div>
+                    <input type="button" value="Ajouter au calendrier" onClick="goScan()" data-icon="gear"/>
                 </div>
                 <div id="returns"></div>
             </div>
