@@ -761,16 +761,10 @@
 			if (textFormats.match(result.format)) {                
 				var scanVal = result.text;
 				if (scanVal.indexOf("http") === 0) {
-					navigator.notification.confirm(
-							'(1) Ouvrir \n(2) Annuler',
-							function (b) {
-								if (b === 1) {
-									window.plugins.childBrowser.showWebPage(result.text, { showLocationBar: true });
-								}
-							},
-							result.text,
-							'1, 2'
-					);
+					var qrBox = confirm('Ouvrir ' + result.text + ' dans le navigateur ?');
+					if (qrBox == true) {
+						window.plugins.childBrowser.showWebPage(result.text, { showLocationBar: true });
+					}
 				} else {
 					navigator.notification.alert(
 							result.text,
@@ -780,18 +774,11 @@
 						);
 				}
 			} else if (productFormats.match(result.format)) {
-				navigator.notification.confirm(
-					'(1) Rechercher le produit\n(2) Annuler',
-					function (b) {
-					  if (b === 1) {
-						  // This is an example url with query - substitute your own here
-						  var searchUrl = "https://www.google.fr/#q=" + result.text;
-						  window.plugins.childBrowser.showWebPage(searchUrl, { showLocationBar: true });
-					  }
-					},
-					result.text,
-					'1, 2' 
-				);
+				var prodBox = confirm('Rechercher le produit ' + result.text + ' dans le navigateur ?');
+				if (prodBox == true) {
+					var searchUrl = "https://www.google.fr/#q=" + result.text;
+					window.plugins.childBrowser.showWebPage(searchUrl, { showLocationBar: true });
+				}
 			} else { alert("Format du scan: " + result.format + 
 					  " NON SUPPORTE. Valeur du scan: " + result.text);
 			}
