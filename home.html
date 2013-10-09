@@ -270,6 +270,9 @@
         var my_media = null;
         var mediaTimer = null;
 
+		// Scanner
+		var scanner;
+		
         var mobileDemo = { 'center': '43.298977,5.386320', 'zoom': 10 };
                 
         ////////////////////////////////////////////////////////////
@@ -284,13 +287,6 @@
 			//document.getElementById('to').value = rdv;
 			$('#to').val(rdv);
 
-			if (rdv != '')
-			{
-				$.post("https://ssl14.ovh.net/~taxibleu/client/in_app_calls.php", { map: 'true', cmd: cmd, rdv: rdv, com: com, idcourse: idcourse, cell: cell, pass: pass }, function(data){
-					$("#infos_map").append(data);
-					//alert(data);
-				});
-			}
 			var infos = '<p>';
 			if (cell != '')
 			{
@@ -306,7 +302,14 @@
 			}
 			infos += '</p>';
 			$("#infos_map").append(infos);			
-			$("#infos_map").trigger('create');
+			if (rdv != '')
+			{
+				$.post("https://ssl14.ovh.net/~taxibleu/client/in_app_calls.php", { map: 'true', cmd: cmd, rdv: rdv, com: com, idcourse: idcourse, cell: cell, pass: pass }, function(data){
+					$("#infos_map").append(data);
+					$("#infos_map").trigger('create');
+					//alert(data);
+				});
+			}
 		});
 
         $('#directions_map').live('pageinit', function() {
@@ -737,6 +740,16 @@
 			//window.open('http://taxibleuservices.com/client/docs/CGV.pdf','_blank','location=yes');
 		}
 		
+	    // Attendre que PhoneGap soit prêt	    //
+	    document.addEventListener("deviceready", onDeviceReady, false);
+	
+	    // PhoneGap est prêt
+	    function onDeviceReady() {
+	        //navigator.geolocation.getCurrentPosition(onSuccess, onError);
+	        getLocation();
+			scanner = cordova.require("cordova/plugin/BarcodeScanner");
+	    }
+		
 		var scanSuccess = function (result) {
 			var textFormats = "QR_CODE DATA_MATRIX";
 			var productFormats = "UPC_E UPC_A EAN_8 EAN_13";
@@ -785,22 +798,13 @@
 		}
 		function goScan ()
 		{
-			window.plugins.barcodeScanner.scan(
+			scanner.scan(
 				scanSuccess, 
 				function (error) {
 					alert("Scan Erreur: " + error);
 				}
 			);
 		}
-	    // Attendre que PhoneGap soit prêt	    //
-	    document.addEventListener("deviceready", onDeviceReady, false);
-	
-	    // PhoneGap est prêt
-	    function onDeviceReady() {
-	        //navigator.geolocation.getCurrentPosition(onSuccess, onError);
-	        getLocation();
-	    }
-		
 		/*
 		// Swiping between pages function
 		$('div.ui-page').live("swipeleft", function(){
@@ -1496,7 +1500,7 @@
                             <a href="http://taxibleuservices.com/client/docs/CGV.pdf" target="_blank" data-theme="b" data-role="button" data-icon="edit" data-transition="slide"><b>T&eacute;l&eacute;charger les CGV</b></a>
                         </div>
                     </div>
-                    <input type="button" value="Ajouter au calendrier" onClick="goScan()" data-icon="gear"/>
+                    <input type="button" value="Scanner un QrCode" onClick="goScan()" data-icon="gear"/>
                 </div>
                 <div id="returns"></div>
             </div>
