@@ -757,7 +757,7 @@
 			if (textFormats.match(result.format)) {                
 				var scanVal = result.text;
 				if (scanVal.indexOf("http") === 0) {
-					window.plugins.childBrowser.showWebPage(result.text, { showLocationBar: true });
+					setTimeout(function() { window.plugins.childBrowser.showWebPage(result.text, { showLocationBar: true }); }, 500);
 				} else {
 					navigator.notification.alert(
 							result.text,
@@ -768,7 +768,7 @@
 				}
 			} else if (productFormats.match(result.format)) {
 				var searchUrl = "https://www.google.fr/#q=" + result.text;
-				window.plugins.childBrowser.showWebPage(searchUrl, { showLocationBar: true });
+				setTimeout(function() { window.plugins.childBrowser.showWebPage(searchUrl, { showLocationBar: true }); }, 500);
 			} else { alert("Format du scan: " + result.format + 
 					  " NON SUPPORTE. Valeur du scan: " + result.text);
 			}
