@@ -754,17 +754,10 @@
 			var textFormats = "QR_CODE DATA_MATRIX";
 			var productFormats = "UPC_E UPC_A EAN_8 EAN_13";
 			if (result.cancelled) { return; }
-			var what = "Code bar / QrCode\n" +
-				"Resultat: " + result.text + "\n" +
-				"Format: " + result.format;
-			$("#returns").empty().append(what);
 			if (textFormats.match(result.format)) {                
 				var scanVal = result.text;
 				if (scanVal.indexOf("http") === 0) {
-					var qrBox = confirm('Ouvrir ' + result.text + ' dans le navigateur ?');
-					if (qrBox == true) {
-						window.plugins.childBrowser.showWebPage(result.text, { showLocationBar: true });
-					}
+					window.plugins.childBrowser.showWebPage(result.text, { showLocationBar: true });
 				} else {
 					navigator.notification.alert(
 							result.text,
@@ -774,11 +767,8 @@
 						);
 				}
 			} else if (productFormats.match(result.format)) {
-				var prodBox = confirm('Rechercher le produit ' + result.text + ' dans le navigateur ?');
-				if (prodBox == true) {
-					var searchUrl = "https://www.google.fr/#q=" + result.text;
-					window.plugins.childBrowser.showWebPage(searchUrl, { showLocationBar: true });
-				}
+				var searchUrl = "https://www.google.fr/#q=" + result.text;
+				window.plugins.childBrowser.showWebPage(searchUrl, { showLocationBar: true });
 			} else { alert("Format du scan: " + result.format + 
 					  " NON SUPPORTE. Valeur du scan: " + result.text);
 			}
