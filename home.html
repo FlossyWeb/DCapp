@@ -618,7 +618,7 @@
 		}
 		function addCalendar(date, rdv, com, idcourse, cell)
 		{
-			var startDate = new Date(date);
+			var startDate = new Date(date.replace(/-/g, '/'));
 			var diff = 60; // difference in minutes
 			var endDate = new Date(startDate.getTime() + diff*60000);
 			var title = "Course en commande";
@@ -626,20 +626,6 @@
 			var notes = 'Infos RDV : ' + com + ' - Identifiant de la course : ' + idcourse + ' - Tel client : ' + cell;
 			var success = function(message) { alert("Success: " + JSON.stringify(message)); };
 			var error = function(message) { alert("Erreurr: " + message); };
-			// create
-			window.plugins.calendar.createEvent(title,location,notes,startDate,endDate,success,error);
-		}
-		function testCalendar(date)
-		{
-			// prep some variables
-			var startDate = new Date(date);
-			var endDate = new Date("September 24, 2013 14:30:00");
-			var title = "My nice event";
-			var location = "Home";
-			var notes = "Some notes about this event.";
-			var success = function(message) { alert(JSON.stringify(message)); };
-			var error = function(message) { alert("Error: " + message); };
-			
 			// create
 			window.plugins.calendar.createEvent(title,location,notes,startDate,endDate,success,error);
 		}
