@@ -258,7 +258,7 @@
 		var station = $.localStorage.getItem('station');
 		var group = $.localStorage.getItem('group');
 		var mngid = $.localStorage.getItem('mngid');
-		var pass = $.sessionStorage.getItem('pass');
+		var pass = $.localStorage.getItem('pass');
 		var idcourse = $.sessionStorage.setItem('idcourse', '');
 		var rdv = $.sessionStorage.setItem('rdv', '');
 		var com = $.sessionStorage.setItem('com', '');
@@ -294,7 +294,7 @@
 			}
 			if (com != '')
 			{
-				infos += '<b>Infos RDV : <span style="color:#09F;">' + com + '</span></b>';
+				infos += '<b>Infos RDV : ' + com + '</b>';
 			}
 			if (idcourse != '')
 			{
@@ -837,7 +837,7 @@
 					
 		$(document).bind( 'pageinit', function() {
 		
-			if(!$.sessionStorage.getItem('pass'))
+			if(!$.localStorage.getItem('pass'))
 			{
 				document.location.href='index.html';
 				//$.mobile.changePage( "test.html", { transition: "slide"} );
