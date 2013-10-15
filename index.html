@@ -197,16 +197,24 @@
 					$("#footer_cont").empty().append(data);
 				});
 			}
-
-			$(document).bind( 'pageinit', function() {
-
+			$('#portal').live( 'pagebeforeshow',function(event) {
 				if($.localStorage.getItem('pass'))
 				{
 					$.mobile.loading( "show" );
 					document.location.href='home.html';
 					//$.mobile.changePage( "test.html", { transition: "slide"} );
 				}
+			});
 
+			$(document).bind( 'pageinit', function() {
+/*
+				if($.localStorage.getItem('pass'))
+				{
+					$.mobile.loading( "show" );
+					document.location.href='home.html';
+					//$.mobile.changePage( "test.html", { transition: "slide"} );
+				}
+*/
 				footer();
 
 				$("#login").submit(function(event) {
