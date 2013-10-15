@@ -83,6 +83,7 @@
 				}
 				if($.localStorage.getItem('pass'))
 				{
+					navigator.splashscreen.hide();
 					$.mobile.loading( "show" );
 					document.location.href='home.html';
 					//$.mobile.changePage( "test.html", { transition: "slide"} );
