@@ -72,6 +72,17 @@
 			};
         </script>        
         <script type="application/javascript" src="js/add2home.js"></script>
+        <script type="text/javascript">
+			// Attendre que PhoneGap soit prêt	    //
+			document.addEventListener("deviceready", onDeviceReady, false);
+		
+			// PhoneGap est prêt
+			function onDeviceReady() {
+				if(navigator.network.connection.type == Connection.NONE){
+					$("body").empty().append('<img src="no_network.png" onClick="window.location.reload()" />');
+				}
+			}
+		</script>
         <script type="text/javascript" src="http://jzaefferer.github.com/jquery-validation/jquery.validate.js"></script>
 		<script type="text/javascript">
 
@@ -183,23 +194,6 @@
 			label.error { float: none; color: red; padding-left: .5em; vertical-align: top; }
         </style>
 		<script type="text/javascript">
-		
-			// Attendre que PhoneGap soit prêt	    //
-			document.addEventListener("deviceready", onDeviceReady, false);
-		
-			// PhoneGap est prêt
-			function onDeviceReady() {
-				if(navigator.network.connection.type == Connection.NONE){
-					$("body").empty().append('<img src="no_network.png" onClick="window.location.reload()" />');
-				}
-				if($.localStorage.getItem('pass'))
-				{
-					navigator.splashscreen.hide();
-					//$.mobile.loading( "show" );
-					//document.location.href='home.html';
-					$.mobile.changePage( "home.html", { transition: "slide"} );
-				}
-			}
 
 			function footer()
 			{
@@ -209,14 +203,17 @@
 			}
 
 			$(document).bind( 'pageinit', function() {
-/*
+												   
 				if($.localStorage.getItem('pass'))
 				{
-					$.mobile.loading( "show" );
-					document.location.href='home.html';
-					//$.mobile.changePage( "test.html", { transition: "slide"} );
+					setTimeout(function() {
+						navigator.splashscreen.hide();
+						$.mobile.loading( "show" );
+						document.location.href='home.html';
+						//$.mobile.changePage( "test.html", { transition: "slideup"} );
+					}, 500);
 				}
-*/
+				
 				footer();
 
 				$("#login").submit(function(event) {
