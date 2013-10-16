@@ -81,10 +81,6 @@
 				if(navigator.network.connection.type == Connection.NONE){
 					$("body").empty().append('<img src="no_network.png" onClick="window.location.reload()" />');
 				}
-				if($.localStorage.getItem('pass'))
-				{
-					navigator.splashscreen.hide();
-				}
 			}
 		</script>
         <script type="text/javascript" src="http://jzaefferer.github.com/jquery-validation/jquery.validate.js"></script>
