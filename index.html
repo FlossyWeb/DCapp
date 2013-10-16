@@ -81,6 +81,7 @@
 				if(navigator.network.connection.type == Connection.NONE){
 					$("body").empty().append('<img src="no_network.png" onClick="window.location.reload()" />');
 				}
+				navigator.splashscreen.hide();
 			}
 		</script>
         <script type="text/javascript" src="http://jzaefferer.github.com/jquery-validation/jquery.validate.js"></script>
@@ -194,16 +195,17 @@
 			label.error { float: none; color: red; padding-left: .5em; vertical-align: top; }
         </style>
 		<script type="text/javascript">
-
+			/*
 			$('#portal').live( 'pagebeforeshow',function(event) {
 				if($.localStorage.getItem('pass'))
 				{
 					navigator.splashscreen.hide();
-					$.mobile.loading( "show" );
+					//$.mobile.loading( "show" );
 					document.location.href='home.html';
 					//$.mobile.changePage( "test.html", { transition: "slideup"} );
 				}
 			});
+			*/
 			function footer()
 			{
 				$.post("https://ssl14.ovh.net/~taxibleu/client/footer_app.php", function(data) {
@@ -212,17 +214,15 @@
 			}
 
 			$(document).bind( 'pageinit', function() {
-				/*												   
+																   
 				if($.localStorage.getItem('pass'))
 				{
-					setTimeout(function() {
-						navigator.splashscreen.hide();
-						$.mobile.loading( "show" );
-						document.location.href='home.html';
-						//$.mobile.changePage( "test.html", { transition: "slideup"} );
-					}, 500);
+					//navigator.splashscreen.hide();
+					$.mobile.loading( "show" );
+					document.location.href='home.html';
+					//$.mobile.changePage( "test.html", { transition: "slideup"} );
 				}
-				*/
+				
 				footer();
 
 				$("#login").submit(function(event) {
