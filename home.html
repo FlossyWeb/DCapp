@@ -259,6 +259,7 @@
 		var cell = $.sessionStorage.setItem('cell', '');
 		var cmd = $.sessionStorage.setItem('cmd', 0);
 		var query_string = $.sessionStorage.setItem('query_string', '');
+		var delay = 10;
 
         // Lecteur audio
         var my_media = null;
@@ -358,14 +359,14 @@
 		});
         
         $('#delayPop').live( 'pagebeforeshow',function(event) {
-			$("#hideCall").hide("fast");
+			//$("#hideCall").hide("fast");
 			$("#delayConf").hide("fast");
 			//$('select#delay').val('d&eacute;lai');
 			//$('select#delay').selectmenu('refresh', true);
 		});
         
 		$( '#planning' ).live( 'pagebeforeshow',function(event){
-			$.post("https://ssl14.ovh.net/~taxibleu/client/in_app_calls.php", { planning: 'true', taxi: taxi, pass: pass }, function(data){
+			$.post("https://ssl14.ovh.net/~taxibleu/client/in_app_calls.php", { planning: 'true', tel: tel, pass: pass }, function(data){
 				$.mobile.loading( "show" );
 				$("#plan_cont").empty().append(data);
 				$("#plan_cont").trigger('create');
@@ -374,7 +375,7 @@
 		});
 
 		$( '#history' ).live( 'pagebeforeshow',function(event){
-			$.post("https://ssl14.ovh.net/~taxibleu/client/in_app_calls.php", { history: 'true', taxi: taxi, pass: pass }, function(data){
+			$.post("https://ssl14.ovh.net/~taxibleu/client/in_app_calls.php", { history: 'true', tel: tel, pass: pass }, function(data){
 				$.mobile.loading( "show" );
 				$("#hist_cont").empty().append(data);
 				$("#hist_cont").trigger('create');
@@ -676,7 +677,12 @@
 		function directCall()
 		{
 			$.mobile.loading( "show" );
-			var query_string = $.sessionStorage.getItem('query_string');
+			// Getting query_string using sessionStorage
+			var dataDiary = $.sessionStorage.getItem('query_string');
+			// Modifying the link 2 diary
+			//var link2diary = document.getElementById('link2diary');
+			query_string = dataDiary + '&delay=' + delay;
+			$.sessionStorage.setItem('query_string', query_string);
 			$.post("https://ssl14.ovh.net/~taxibleu/server/diary_app_dcvp.php", query_string, function(data){ 
 				switch (data.location) {
 					 case '#directions_map':
@@ -950,14 +956,8 @@
 				});
 				
 				// Getting delay list value
-				var delay = document.getElementById('delay').value;
-				// Getting query_string using sessionStorage
-				var dataDiary = $.sessionStorage.getItem('query_string');
-				// Modifying the link 2 diary
-				//var link2diary = document.getElementById('link2diary');
-				dataDiary = dataDiary + '&delay=' + delay;
-				$.sessionStorage.setItem('query_string', dataDiary);
-				$("#hideCall").show("fast");
+				delay = document.getElementById('delay').value;
+				//$("#hideCall").show("fast");
 				$("#delayConf").html(str);
 				$("#delayConf").show("fast");
 				//$("#link2diary").trigger('click');
@@ -1190,7 +1190,7 @@
                 <div class="ui-bar-a ui-corner-all ui-shadow" style="padding:1em;">
                     <label for="delay">Temps d&rsquo;approche : </label>
                     <select name="delay" id="delay" data-theme="b">
-                        <option selected value="7">d&eacute;lai</option>
+                        <option selected value="10">d&eacute;lai</option>
                         <option value="5">5 minutes</option>
                         <option value="10">10 minutes</option>
                         <option value="15">15 minutes</option>
@@ -1199,7 +1199,7 @@
                     <!-- 
                     <a href="#" id="link2diary" data-role="button" data-iconpos="left" data-icon="check" data-theme="b" style="display:none;">Envoyer</a>
                     -->
-                    <div id="hideCall" style="display:none;">
+                    <div id="hideCall">
                         <input type="button" id="directCall" data-role="button" value="Envoyer" onClick="directCall()" data-iconpos="left" data-icon="check" data-theme="b"/>
                     </div>
                     <div id="delayConf"></div>
