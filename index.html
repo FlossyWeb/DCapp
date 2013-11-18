@@ -205,14 +205,25 @@
 				}
 			});
 			*/
+			var actived;
 			function active()
 			{
-				var actived = false;
 				var tel = $.localStorage.getItem('tel');
 				$.post("https://ssl14.ovh.net/~taxibleu/client/active_app.php", { tel: tel}, function(data) {
-					actived = data.active;
+					var actived = data.active;
+					if($.localStorage.getItem('pass') && actived)
+					{
+						//navigator.splashscreen.hide();
+						$.mobile.loading( "show" );
+						document.location.href='home.html';
+						//$.mobile.changePage( "test.html", { transition: "slideup"} );
+					}
+					else if (!actived) {
+						var display = '<p style="color:red;"><b>Il semblerait que votre compte ait &eacute;t&eacute; d&eacute;sactiv&eacute;</b></p><a href="mailto:info@taxibleuservices.com"style="width:32%;display:inline-block;"><img src="visuels/Contact_flat.png" width="90%"/></a>';
+						$("#returns").empty().append(display);
+						//alert(actived +' - '+  $.localStorage.getItem('tel'));
+					}
 				}, "json");
-				return actived;
 			}
 			function footer()
 			{
@@ -222,19 +233,8 @@
 			}
 
 			$(document).bind( 'pageinit', function() {
-																   
-				if($.localStorage.getItem('pass') && active())
-				{
-					//navigator.splashscreen.hide();
-					$.mobile.loading( "show" );
-					document.location.href='home.html';
-					//$.mobile.changePage( "test.html", { transition: "slideup"} );
-				}
-				else if (!active()) {
-					var display = 'Il semblerait que votre compte ait &eacute;t&eacute; d&eacute;sactiv&eacute;<br><a href="mailto:info@taxibleuservices.com"style="width:32%;display:inline-block;"><img src="visuels/Contact_flat.png" width="90%"/><br></a>';
-					$("#returns").empty().append(display);
-				}
 				
+				active();				
 				footer();
 
 				$("#login").submit(function(event) {
