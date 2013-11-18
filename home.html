@@ -7,7 +7,7 @@
     <link type="image/x-icon" href="visuels/favicon.ico" rel="icon"/>
     <link type="image/x-icon" href="visuels/favicon.ico" rel="shortcut icon"/>
     <link rel="apple-touch-icon" href="visuels/idev.favicon.png"/>
-    <meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <!-- <meta name="viewport" content="width=device-width, height=device-height, user-scalable=yes, initial-scale=1"/> -->
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <link rel="apple-touch-startup-image" href="visuels/startup_image.png" />
@@ -636,27 +636,21 @@
 		}
 		function histoMap(rdv, idcourse, com, cell)
 		{
-			$.mobile.loading( "show" );
 			$.sessionStorage.setItem('rdv', rdv);
 			$.sessionStorage.setItem('idcourse', idcourse);
 			$.sessionStorage.setItem('com', com);
 			$.sessionStorage.setItem('cell', cell);
 			$.sessionStorage.setItem('cmd', 0);
-			var goOn = setTimeout( function () {
-				$.mobile.changePage( $("#directions_map"), { transition: "slide"} );
-			}, 1000);
+			$.mobile.changePage( $("#directions_map"), { transition: "slide"} );
 		}
 		function planMap(rdv, idcourse, com, cell)
 		{
-			$.mobile.loading( "show" );
 			$.sessionStorage.setItem('rdv', rdv);
 			$.sessionStorage.setItem('idcourse', idcourse);
 			$.sessionStorage.setItem('com', com);
 			$.sessionStorage.setItem('cell', cell);
 			$.sessionStorage.setItem('cmd', 1);
-			var goOn = setTimeout( function () {
-				$.mobile.changePage( $("#directions_map"), { transition: "slide"} );
-			}, 1000);
+			$.mobile.changePage( $("#directions_map"), { transition: "slide"} );
 		}
 		function justify(when, rdv, comments, destadd, cell)//justify(\''.$when.'\', \''.$rdv.'\', \''.$comments.'\', \''.$destadd.'\', \''.$cell.'\
 		{
@@ -914,59 +908,32 @@
 			$("#homepanel_poper").trigger('click');
 		});
 		$('#home .ui-content').live("swipeleft", function() {
-			$.mobile.loading( "show" );
 			Dispo_On(); 
-			var goOn = setTimeout( function () {
-				$.mobile.changePage( $("#jobs_taker"), { transition: "slide"} );
-			}, 1000);
+			$.mobile.changePage( $("#jobs_taker"), { transition: "slide"} );
 		});
 		$('#jobs_taker').live("swiperight", function() {
-			$.mobile.loading( "show" );
-			var goOn = setTimeout( function () {
-				$.mobile.changePage( $("#home"), { transition: "slide", reverse: true} );
-			}, 1000);
+			$.mobile.changePage( $("#home"), { transition: "slide", reverse: true} );
 		});
 		$('#jobs_taker .ui-content').live("swipeleft", function() {
-			$.mobile.loading( "show" );
-			var goOn = setTimeout( function () {
-				$.mobile.changePage( $("#history"), { transition: "slide"} );
-			}, 1000);
+			$.mobile.changePage( $("#history"), { transition: "slide"} );
 		});
 		$('#history').live("swiperight", function() {
-			$.mobile.loading( "show" );
-			var goOn = setTimeout( function () {
-				$.mobile.changePage( $("#jobs_taker"), { transition: "slide", reverse: true} );
-			}, 1000);
+			$.mobile.changePage( $("#jobs_taker"), { transition: "slide", reverse: true} );
 		});
 		$('#history .ui-content').live("swipeleft", function() {
-			$.mobile.loading( "show" );
-			var goOn = setTimeout( function () {
-				$.mobile.changePage( $("#home"), { transition: "slide"} );
-			}, 1000);
+			$.mobile.changePage( $("#home"), { transition: "slide"} );
 		});
 		$('#cmd').live("swiperight", function() {
-			$.mobile.loading( "show" );
-			var goOn = setTimeout( function () {
-				$.mobile.changePage( $("#home"), { transition: "slide", reverse: true} );
-			}, 1000);
+			$.mobile.changePage( $("#home"), { transition: "slide", reverse: true} );
 		});
 		$('#cmd .ui-content').live("swipeleft", function() {
-			$.mobile.loading( "show" );
-			var goOn = setTimeout( function () {
-				$.mobile.changePage( $("#planning"), { transition: "slide"} );
-			}, 1000);
+			$.mobile.changePage( $("#planning"), { transition: "slide"} );
 		});
 		$('#planning').live("swiperight", function() {
-			$.mobile.loading( "show" );
-			var goOn = setTimeout( function () {
-				$.mobile.changePage( $("#cmd"), { transition: "slide", reverse: true} );
-			}, 1000);
+			$.mobile.changePage( $("#cmd"), { transition: "slide", reverse: true} );
 		});
 		$('#planning .ui-content').live("swipeleft", function() {
-			$.mobile.loading( "show" );
-			var goOn = setTimeout( function () {
-				$.mobile.changePage( $("#home"), { transition: "slide"} );
-			}, 1000);
+			$.mobile.changePage( $("#home"), { transition: "slide"} );
 		});
 		$('#directions_map').live("swiperight", function() {
 			$("#mapPanel_poper").trigger('click');
