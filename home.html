@@ -636,21 +636,27 @@
 		}
 		function histoMap(rdv, idcourse, com, cell)
 		{
+			$.mobile.loading( "show" );
 			$.sessionStorage.setItem('rdv', rdv);
 			$.sessionStorage.setItem('idcourse', idcourse);
 			$.sessionStorage.setItem('com', com);
 			$.sessionStorage.setItem('cell', cell);
 			$.sessionStorage.setItem('cmd', 0);
-			$.mobile.changePage( $("#directions_map"), { transition: "slide"} );
+			var goOn = setTimeout( function () {
+				$.mobile.changePage( $("#directions_map"), { transition: "slide"} );
+			}, 1000);
 		}
 		function planMap(rdv, idcourse, com, cell)
 		{
+			$.mobile.loading( "show" );
 			$.sessionStorage.setItem('rdv', rdv);
 			$.sessionStorage.setItem('idcourse', idcourse);
 			$.sessionStorage.setItem('com', com);
 			$.sessionStorage.setItem('cell', cell);
 			$.sessionStorage.setItem('cmd', 1);
-			$.mobile.changePage( $("#directions_map"), { transition: "slide"} );
+			var goOn = setTimeout( function () {
+				$.mobile.changePage( $("#directions_map"), { transition: "slide"} );
+			}, 1000);
 		}
 		function justify(when, rdv, comments, destadd, cell)//justify(\''.$when.'\', \''.$rdv.'\', \''.$comments.'\', \''.$destadd.'\', \''.$cell.'\
 		{
@@ -908,32 +914,59 @@
 			$("#homepanel_poper").trigger('click');
 		});
 		$('#home .ui-content').live("swipeleft", function() {
-			$.mobile.changePage( $("#jobs_taker"), { transition: "slide"} );
+			$.mobile.loading( "show" );
 			Dispo_On(); 
+			var goOn = setTimeout( function () {
+				$.mobile.changePage( $("#jobs_taker"), { transition: "slide"} );
+			}, 1000);
 		});
 		$('#jobs_taker').live("swiperight", function() {
-			$.mobile.changePage( $("#home"), { transition: "slide", reverse: true} );
+			$.mobile.loading( "show" );
+			var goOn = setTimeout( function () {
+				$.mobile.changePage( $("#home"), { transition: "slide", reverse: true} );
+			}, 1000);
 		});
 		$('#jobs_taker .ui-content').live("swipeleft", function() {
-			$.mobile.changePage( $("#history"), { transition: "slide"} );
+			$.mobile.loading( "show" );
+			var goOn = setTimeout( function () {
+				$.mobile.changePage( $("#history"), { transition: "slide"} );
+			}, 1000);
 		});
 		$('#history').live("swiperight", function() {
-			$.mobile.changePage( $("#jobs_taker"), { transition: "slide", reverse: true} );
+			$.mobile.loading( "show" );
+			var goOn = setTimeout( function () {
+				$.mobile.changePage( $("#jobs_taker"), { transition: "slide", reverse: true} );
+			}, 1000);
 		});
 		$('#history .ui-content').live("swipeleft", function() {
-			$.mobile.changePage( $("#home"), { transition: "slide"} );
+			$.mobile.loading( "show" );
+			var goOn = setTimeout( function () {
+				$.mobile.changePage( $("#home"), { transition: "slide"} );
+			}, 1000);
 		});
 		$('#cmd').live("swiperight", function() {
-			$.mobile.changePage( $("#home"), { transition: "slide", reverse: true} );
+			$.mobile.loading( "show" );
+			var goOn = setTimeout( function () {
+				$.mobile.changePage( $("#home"), { transition: "slide", reverse: true} );
+			}, 1000);
 		});
 		$('#cmd .ui-content').live("swipeleft", function() {
-			$.mobile.changePage( $("#planning"), { transition: "slide"} );
+			$.mobile.loading( "show" );
+			var goOn = setTimeout( function () {
+				$.mobile.changePage( $("#planning"), { transition: "slide"} );
+			}, 1000);
 		});
 		$('#planning').live("swiperight", function() {
-			$.mobile.changePage( $("#cmd"), { transition: "slide", reverse: true} );
+			$.mobile.loading( "show" );
+			var goOn = setTimeout( function () {
+				$.mobile.changePage( $("#cmd"), { transition: "slide", reverse: true} );
+			}, 1000);
 		});
 		$('#planning .ui-content').live("swipeleft", function() {
-			$.mobile.changePage( $("#home"), { transition: "slide"} );
+			$.mobile.loading( "show" );
+			var goOn = setTimeout( function () {
+				$.mobile.changePage( $("#home"), { transition: "slide"} );
+			}, 1000);
 		});
 		$('#directions_map').live("swiperight", function() {
 			$("#mapPanel_poper").trigger('click');
