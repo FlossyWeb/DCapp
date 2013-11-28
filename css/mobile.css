@@ -22,6 +22,22 @@ a {
 	overflow: hidden;
 	width:100%;
 }
+.header{
+	width:100%;
+	position:absolute;
+	Top:0px;
+	left:0px;
+	z-index:0;
+}
+
+
+.footer{
+	width:100%;
+	position:absolute;
+	bottom:0px;
+	left:0px;
+	z-index:0;
+}
 .banner
 {
   width: 96%;
