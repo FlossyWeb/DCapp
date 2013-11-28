@@ -24,10 +24,9 @@ a {
 }
 .header{
 	width:100%;
-	position:absolute;
-	Top:0px;
-	left:0px;
-	z-index:0;
+	margin-left:auto;
+	margin-right:auto;
+	background: #333;
 }
 
 
@@ -37,6 +36,7 @@ a {
 	bottom:0px;
 	left:0px;
 	z-index:0;
+	background: #333;
 }
 .banner
 {
