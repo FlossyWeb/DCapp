@@ -818,17 +818,17 @@
 		function taximedia()
 		{
 			//window.plugins.childBrowser.showWebPage('http://www.taximedia.fr/redir.php', { showLocationBar: true });
-			window.open('http://www.taximedia.fr/redir.php','_blank','location=yes');
+			window.open('http://www.taximedia.fr/redir.php','_blank','location=yes,enableViewportScale=yes,closebuttoncaption=Fermer');
 		}
 		function help()
 		{
 			//window.plugins.childBrowser.showWebPage('http://taxibleuservices.com/client/help.html', { showLocationBar: true });
-			window.open('http://taxibleuservices.com/client/help.html','_blank','location=yes');
+			window.open('http://taxibleuservices.com/client/help.html','_blank','location=yes,enableViewportScale=yes,closebuttoncaption=Fermer');
 		}
 		function cgv()
 		{
 			//window.plugins.childBrowser.showWebPage('http://taxibleuservices.com/client/docs/CGV.pdf', { showLocationBar: true });
-			window.open('http://taxibleuservices.com/client/docs/CGV.pdf','_blank','location=yes');
+			window.open('http://taxibleuservices.com/client/docs/CGV.pdf','_blank','location=yes,enableViewportScale=yes,closebuttoncaption=Fermer');
 		}
 		
 		// Checks App or Browser
@@ -859,7 +859,7 @@
 				if (scanVal.indexOf("http") === 0) {
 					setTimeout(function() { 
 						//window.plugins.childBrowser.showWebPage(result.text, { showLocationBar: true }); 
-						window.open(result.text,'_blank','location=yes');
+						window.open(result.text,'_blank','location=yes,enableViewportScale=yes,closebuttoncaption=Fermer');
 					}, 500);
 				} else {
 					navigator.notification.alert(
