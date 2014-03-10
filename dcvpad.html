@@ -80,6 +80,8 @@
 	var time;
 	var endcourse; // Clears the current timeout
 	var sec;
+	var taxi = $.localStorage.getItem('taxi');
+	var tel = $.localStorage.getItem('tel');
 	var mobileMap = { 'center': '43.298977,5.386320', 'zoom': 12 };
 	
 	////////////////////////////////////////////////////////////
@@ -233,7 +235,7 @@
 			payment = "Oui";
 		}
 		//var comments = '<ul>' + hostname + '<li>Nom du client : ' + room + '</li><li>Paiement CB : ' + payment + '</li><li>Nombre de passagers : ' + howMany + '</li><li>Type de vehicule : ' + typecar + '</li></ul>';
-		var comments = '<ul><li>Nom du client : ' + room + '</li><li>Paiement CB : ' + payment + '</li><li>Nombre de passagers : ' + howMany + '</li><li>Type de vehicule : ' + typecar + '</li></ul>';
+		var comments = '<ul>Course venant du taxi '+taxi+' (tel: '+tel+')<li>Nom du client : ' + room + '</li><li>Paiement CB : ' + payment + '</li><li>Nombre de passagers : ' + howMany + '</li><li>Type de vehicule : ' + typecar + '</li></ul>';
 		var dest = document.getElementById("DestAddress").value.replace(/'/g, "&rsquo;");
 		var cell = document.getElementById("cellular").value;
 		var when = document.getElementById("when").value;
