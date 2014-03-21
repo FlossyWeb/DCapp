@@ -480,6 +480,8 @@
 					$("#warn_home").empty().append('<a href="#jobs_taker"><img src="visuels/Alerte_course_flat.png" width="100%"/></a>');
 					document.getElementById("play").play();
 					document.getElementById("play_home").play();
+					//navigator.notification.beep(2);
+					navigator.notification.vibrate(3600);
 				}
 				else
 				{
@@ -496,6 +498,8 @@
 				{
 					$("#warn_cmd").empty().append('<img src="visuels/Alerte_course_flat.png" width="100%"/>');
 					document.getElementById("play_cmd").play();
+					//navigator.notification.beep(2);
+					navigator.notification.vibrate(3600);
 				}
 				else
 				{
