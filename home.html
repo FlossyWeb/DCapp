@@ -161,7 +161,7 @@
 						else {
 							display = '<p style="color:red;"><b>la modification de vos informations personnelles n&rsquo;&agrave; pas &eacute;t&eacute; prise en compte, l&rsquo;identifiant fourni ne figurant pas dans notre base de donn&eacute;e.</b></p>';
 						}
-						$('#mod_collaps').trigger('collapse');
+						$('#mod_collaps').collapsible( "collapse" );
 						$("#returns").empty().append(display);
 					}, "json");
 				}
@@ -291,7 +291,7 @@
 			var infos = '<p>';
 			if (cell != '')
 			{
-				infos += '<a data-ajax="false" href="tel:' + cell + '" data-role="button" data-icon="grid">Joindre le client</a>';
+				infos += '<a data-ajax="false" href="tel:' + cell + '" class="ui-btn ui-corner-all ui-shadow ui-icon-phone ui-btn-icon-left">Joindre le client</a>';
 			}
 			if (com != '')
 			{
@@ -313,7 +313,7 @@
 			}
 		});
 
-        $('#directions_map').live('pageinit', function() {
+        $('#directions_map').live('pagecreate', function() {
             demo.add('directions_map', function() {
                 $('#map_canvas_1').gmap({'center': mobileDemo.center, 'zoom': mobileDemo.zoom, 'disableDefaultUI':true, 'callback': function() {
                     var self = this;
@@ -350,11 +350,11 @@
 						
         });
         
-        $('#directions_map').live('pageshow', function() {
+        $('#directions_map').live('pagecontainershow', function() {
             demo.add('directions_map', $('#map_canvas_1').gmap('get', 'getCurrentPosition')).load('directions_map');
         });
 		
-        $('#toolate').live('pageinit', function() {
+        $('#toolate').live('pagecreate', function() {
 			var idcourse = $.sessionStorage.getItem('idcourse');
             var late = '<p style="color:#F00; font-size: large;"><b>D&eacute;sol&eacute; mais la course ' + idcourse + ' &agrave; &eacute;t&eacute; prise par un autre taxi.</b></p>';
 			$("#late_cont").empty().append(late);			
@@ -394,7 +394,7 @@
 			}).done(function() { $.mobile.loading( "hide" ); });
 		});
 
-        $('#manage').live('pageinit', function() {
+        $('#manage').live('pagecreate', function() {
 			var dec_nom = $('#nom').html(nom).text();
 			var dec_prenom = $('#prenom').html(prenom).text();
 			var dec_station = $('#station').html(station).text();
@@ -433,32 +433,38 @@
 		}
 		
         function showPosition(position)
-          {
-          var latlon=position.coords.latitude+","+position.coords.longitude;
-        
-          var img_url="http://maps.googleapis.com/maps/api/staticmap?center="
-          +latlon+"&zoom=14&size=600x400&sensor=false&key=AIzaSyCvL4a4-LKLUXJrTwpJ4_UnkmtZSGgrVWg";
-          document.getElementById("mapholder").innerHTML="<img src='"+img_url+"' />";
-          }			  
-        function showError(error)
-          {
+		{
+			var latlon=position.coords.latitude+","+position.coords.longitude;
+			
+			var img_url="http://maps.googleapis.com/maps/api/staticmap?center="
+			+latlon+"&zoom=14&size=600x400&sensor=false&key=AIzaSyCvL4a4-LKLUXJrTwpJ4_UnkmtZSGgrVWg";
+			document.getElementById("mapholder").innerHTML="<img src='"+img_url+"' />";
+		}			  
+		function showError(error)
+		{
 			var x=document.getElementById("results");
 			switch(error.code) 
 			{
 				case error.PERMISSION_DENIED:
-				  x.innerHTML="Vous avez refus&eacute; l&rsquo;acc&egrave;s &agrave; la G&eacute;olocalisation."
+				  x.innerHTML="<strong>Vous avez refus&eacute; l&rsquo;acc&egrave;s &agrave; la G&eacute;olocalisation.</strong>"
 				  break;
 				case error.POSITION_UNAVAILABLE:
-				  x.innerHTML="G&eacute;olocalisation indisponible, veuillez regarder dans l&rsquo;aide ou activer le service dans les reglages de votre appareil."
+				  x.innerHTML="<strong>G&eacute;olocalisation indisponible, veuillez regarder dans l&rsquo;aide ou activer le service dans les reglages de votre appareil.</strong>"
 				  break;
 				case error.TIMEOUT:
-				  x.innerHTML="La demande de G&eacute;olocalisation a expir&eacute;(user location request timed out)."
+				  x.innerHTML="<strong>La demande de G&eacute;olocalisation a expir&eacute;(user location request timed out).</strong>"
 				  break;
 				case error.UNKNOWN_ERROR:
-				  x.innerHTML="Erreur inconnue de G&eacute;olocalisation (unknown error occurred)."
+				  x.innerHTML="<strong>Erreur inconnue de G&eacute;olocalisation (unknown error occurred).</strong>"
 				  break;
+				default:
+				  x.innerHTML="<strong>Erreur de G&eacute;olocalisation, red&eacute;marrage du smartphone n&eacute;c&eacute;ssaire.</strong>"
 			}
-          }			  
+			// Fall back to no options and try again for Android to work.
+			navigator.geolocation.getCurrentPosition(codeLatLng, function(){
+				$( "#errorPop" ).popup( "open", { positionTo: "window" } );
+			});
+		}			  
         function get_coords(position) 
         {
             lat = position.coords.latitude;
@@ -644,7 +650,7 @@
 			$.sessionStorage.setItem('com', com);
 			$.sessionStorage.setItem('cell', cell);
 			$.sessionStorage.setItem('cmd', 0);
-			$.mobile.changePage( $("#directions_map"), { transition: "slide"} );
+			$.mobile.pageContainer.pagecontainer("change", "#directions_map", { transition: "slide"} );
 		}
 		function planMap(rdv, idcourse, com, cell)
 		{
@@ -653,7 +659,7 @@
 			$.sessionStorage.setItem('com', com);
 			$.sessionStorage.setItem('cell', cell);
 			$.sessionStorage.setItem('cmd', 1);
-			$.mobile.changePage( $("#directions_map"), { transition: "slide"} );
+			$.mobile.pageContainer.pagecontainer("change", "#directions_map", { transition: "slide"} );
 		}
 		function justify(when, rdv, comments, destadd, cell)//justify(\''.$when.'\', \''.$rdv.'\', \''.$comments.'\', \''.$destadd.'\', \''.$cell.'\
 		{
@@ -667,7 +673,7 @@
 		function delayCall(query_string)
 		{
 			$.sessionStorage.setItem('query_string', query_string);
-			$.mobile.changePage( $("#delayPop"), { transition: "slide"} );
+			$.mobile.pageContainer.pagecontainer("change", "#delayPop", { transition: "slide"} );
 		}
 		/*
 		$(document).on( "click", "#directCall", function() {
@@ -698,16 +704,16 @@
 						$.sessionStorage.setItem('com', data.com);
 						$.sessionStorage.setItem('cell', data.cell);
 						$.sessionStorage.setItem('cmd', 0);
-						$.mobile.changePage( $("#directions_map"), { transition: "slide"} );
+						$.mobile.pageContainer.pagecontainer("change", "#directions_map", { transition: "slide"} );
 						 
 						 break;
 					 case '#toolate':
-						$.mobile.changePage( $("#toolate"), { transition: "slide"} );
+						$.mobile.pageContainer.pagecontainer("change", "#toolate", { transition: "slide"} );
 						$.sessionStorage.setItem('idcourse', data.idcourse);
 						 
 						 break;
 					 default: 
-						$.mobile.changePage( $("#home"), { transition: "slide"} );
+						$.mobile.pageContainer.pagecontainer("change", "#home", { transition: "slide"} );
 						 
 						 break;
 				}					
@@ -726,16 +732,16 @@
 						$.sessionStorage.setItem('com', data.com);
 						$.sessionStorage.setItem('cell', data.cell);
 						$.sessionStorage.setItem('cmd', 1);
-						$.mobile.changePage( $("#directions_map"), { transition: "slide"} );
+						$.mobile.pageContainer.pagecontainer("change", "#directions_map", { transition: "slide"} );
 						 
 						 break;
 					 case '#toolate':
-						$.mobile.changePage( $("#toolate"), { transition: "slide"} );
+						$.mobile.pageContainer.pagecontainer("change", "#toolate", { transition: "slide"} );
 						$.sessionStorage.setItem('idcourse', data.idcourse);
 						 
 						 break;
 					 default: 
-						$.mobile.changePage( $("#home"), { transition: "slide"} );
+						$.mobile.pageContainer.pagecontainer("change", "#home", { transition: "slide"} );
 						 
 						 break;
 				}					
@@ -793,7 +799,7 @@
 		}
 		function check_answer()
 		{
-			$.mobile.changePage( $("#urgency"), { transition: "slide"} );
+			$.mobile.pageContainer.pagecontainer("change", "#urgency", { transition: "slide"} );
 			var idcourseUrg = $.sessionStorage.getItem('idcourseUrg');
 			sec = setInterval( function () {
 				$.post("https://ssl14.ovh.net/~taxibleu/client/status.php?idcourse=" + idcourseUrg + "&check=1" , { dep: '13'}, function(data){ 
@@ -812,7 +818,7 @@
 		{
 			var idcourseUrg = $.sessionStorage.getItem('idcourseUrg');
 			$.post("https://ssl14.ovh.net/~taxibleu/client/secure.php", { taxi: '', tel: '', rdvpoint: '', helptaxi: taxi, helpname: '', helptel: tel, idcourse: idcourseUrg, dep: '', pass: pass, stopcall: 'true'}, function(data){
-				$.mobile.changePage( $("#home"), { transition: "slide"} );
+				$.mobile.pageContainer.pagecontainer("change", "#home", { transition: "slide"} );
 			});
 			//$.sessionStorage.setItem('idcourseUrg', false);
 			clearInterval(sec);
@@ -907,43 +913,56 @@
 		});
 		*/		
 		$('#home').live("swiperight", function() {
-			//$.mobile.changePage( $("#home"), { transition: "slide", reverse: true} );
+			//$.mobile.pageContainer.pagecontainer("change", "#home"), { transition: "slide", reverse: true} );
 			$("#homepanel_poper").trigger('click');
 		});
 		$('#home .ui-content').live("swipeleft", function() {
 			Dispo_On(); 
-			$.mobile.changePage( $("#jobs_taker"), { transition: "slide"} );
+			$.mobile.pageContainer.pagecontainer("change", "#jobs_taker", { transition: "slide"} );
 		});
 		$('#jobs_taker').live("swiperight", function() {
-			$.mobile.changePage( $("#home"), { transition: "slide", reverse: true} );
+			$.mobile.pageContainer.pagecontainer("change", "#home", { transition: "slide", reverse: true} );
 		});
 		$('#jobs_taker .ui-content').live("swipeleft", function() {
-			$.mobile.changePage( $("#history"), { transition: "slide"} );
+			$.mobile.pageContainer.pagecontainer("change", "#history", { transition: "slide"} );
 		});
 		$('#history').live("swiperight", function() {
-			$.mobile.changePage( $("#jobs_taker"), { transition: "slide", reverse: true} );
+			$.mobile.pageContainer.pagecontainer("change", "#jobs_taker", { transition: "slide", reverse: true} );
 		});
 		$('#history .ui-content').live("swipeleft", function() {
-			$.mobile.changePage( $("#home"), { transition: "slide"} );
+			$.mobile.pageContainer.pagecontainer("change", "#home", { transition: "slide"} );
 		});
 		$('#cmd').live("swiperight", function() {
-			$.mobile.changePage( $("#home"), { transition: "slide", reverse: true} );
+			$.mobile.pageContainer.pagecontainer("change", "#home", { transition: "slide", reverse: true} );
 		});
 		$('#cmd .ui-content').live("swipeleft", function() {
-			$.mobile.changePage( $("#planning"), { transition: "slide"} );
+			$.mobile.pageContainer.pagecontainer("change", "#planning", { transition: "slide"} );
 		});
 		$('#planning').live("swiperight", function() {
-			$.mobile.changePage( $("#cmd"), { transition: "slide", reverse: true} );
+			$.mobile.pageContainer.pagecontainer("change", "#cmd", { transition: "slide", reverse: true} );
 		});
 		$('#planning .ui-content').live("swipeleft", function() {
-			$.mobile.changePage( $("#home"), { transition: "slide"} );
+			$.mobile.pageContainer.pagecontainer("change", "#home", { transition: "slide"} );
 		});
 		$('#directions_map').live("swiperight", function() {
 			$("#mapPanel_poper").trigger('click');
 		});
-					
-		$(document).bind( 'pageinit', function() {
 		
+		$(document).bind( 'pagecreate', function() {
+		
+			var tel = $.localStorage.getItem('tel');
+			$.post("https://ssl14.ovh.net/~taxibleu/client/active_app.php", { tel: tel, dep: '34'}, function(data) {
+				// GET SHIT BACK !!
+				$.localStorage.setItem('civil', data.civil);
+				$.localStorage.setItem('nom', data.nom);
+				$.localStorage.setItem('prenom', data.prenom);
+				$.localStorage.setItem('taxi', data.taxi);
+				$.localStorage.setItem('tel', data.tel);
+				$.localStorage.setItem('siret', data.siret);
+				$.localStorage.setItem('email', data.email);
+				$.localStorage.setItem('station', data.station);
+				$.localStorage.setItem('group', data.group);
+			}, "json");
 			if(!$.localStorage.getItem('pass'))
 			{
 				document.location.href='index.html';
@@ -1014,9 +1033,9 @@
                   <li><a href="#infos" data-transition="slide"><b>Infos DCVP</b></a></li>
                   <li><a href="dcvpad.html" data-ajax="false" data-transition="slide"><b>Envoyer une course</b></a></li>
                 </ul>
-                <a href="#home" data-rel="close" data-role="button" data-theme="a">Fermer</a>
+                <a href="#home" data-rel="close" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-btn-icon-left ui-icon-delete">Fermer</a>
             </div><!-- /panel -->
-            <div data-role="content" id="home_cont">
+            <div class="ui-content" role="main" id="home_cont">
                 <div class="ui-bar-b ui-corner-all ui-shadow" style="padding:1em; text-align: left;">
                 <div style="text-align: left;">
                     <div id="dispo">
@@ -1088,20 +1107,31 @@
                     <!-- N&rsquo;oubliez pas de vous rendre indisponible quand vous ne d&eacute;sirez plus prendre de courses, cela vous &eacute;vitera d&rsquo;&ecirc;tre importun&eacute; durant votre repos.<br> -->
                 </div>
                 <div id="results"></div>
-                <a href="#secureDialog" data-rel="popup" data-position-to="window" data-role="button" class="secure-bt" data-theme="b" data-icon="alert">Bouton d&rsquo;urgence</a>
+                <a href="#secureDialog" data-rel="popup" data-position-to="window" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-alert" class="secure-bt">Bouton d&rsquo;urgence</a>
                 <div data-role="popup" data-theme="a" id="secureDialog" data-dismissible="false" data-overlay-theme="b">
                     <div data-theme="a" data-role="header">
                         <h1>
                             Confirmation
                         </h1>
                     </div>
-                    <div data-role="content">
+                    <div class="ui-content" role="main">
                         <h1>Lancer l&rsquo;appel d&rsquo;urgence ?</h1>
                         <input type="button" data-theme="b" data-icon="check" onClick="getLocationOnce()" value="CONFIRMER"/>
-                        <a href="#home" data-rel="back" data-icon="delete" data-role="button" data-transition="slideUp" data-theme="a">ANNULER</a>            
+                        <a href="#home" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-back ui-btn-icon-left" data-transition="slideUp">ANNULER</a>            
                         <div id="secureResults"></div>
                     </div>
                 </div>        
+                <div data-role="popup" data-theme="a" id="errorPop" data-dismissible="true" data-overlay-theme="b">
+					<a href="#infos" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-icon-delete ui-btn-icon-notext ui-btn-right">Fermer</a>
+                    <div data-theme="a" data-role="header">
+                        <h1>
+                            G&eacute;olocalisation
+                        </h1>
+                    </div>
+                    <div class="ui-content" role="main">
+                        <div id="ePopResults"></div>
+                    </div>
+                </div>
                 <div id="player_home">
                     <audio id="play_home" loop="loop" preload="auto" style="display:none" >
                         <source src="http://www.taxibleuservices.com/client/sounds/ring.mp3" type="audio/mpeg" />
@@ -1132,15 +1162,15 @@
                   <li><a href="#infos" data-transition="slide"><b>Infos DCVP</b></a></li>
                   <li><a href="dcvpad.html" data-ajax="false" data-transition="slide"><b>Envoyer une course</b></a></li>
                 </ul>
-                <a href="#jobs_taker" data-rel="close" data-role="button" data-theme="a">Fermer</a>
+                <a href="#jobs_taker" data-rel="close" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-btn-icon-left ui-icon-delete">Fermer</a>
             </div><!-- /panel -->
             <div data-theme="a" data-role="header" data-position="fixed">
 				<h1 style="padding: 0; margin: 0;">
-                    <a data-rel="back" data-icon="back" data-iconpos="left" data-role="button" data-transition="slide" data-inline="true" data-theme="a"><b>Retour</b></a>            
-                    <a href="#jobs_panel" data-role="button" data-iconpos="left" data-icon="home" data-transition="slide" data-inline="true" data-theme="b"><b>Menu</b></a>
+                    <a data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-btn-icon-left ui-icon-back ui-btn-inline" data-transition="slide"><b>Retour</b></a>            
+                    <a href="#jobs_panel" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-home ui-btn-inline" data-transition="slide"><b>Menu</b></a>
                 </h1>
             </div>
-            <div data-role="content">
+            <div class="ui-content" role="main">
                 <div id="sound">
                     <a href="#jobs_taker" onClick="Sound_Off()"><img src="visuels/sound_on.png" width="20"/></a>
                 </div>
@@ -1178,17 +1208,17 @@
                     </a>
                 </div>
                 <div class="cleaner"></div>
-                <a href="#secureDialogJobs" data-rel="popup" data-position-to="window" data-role="button" class="secure-bt" data-theme="b" data-icon="alert">Bouton d&rsquo;urgence</a>
+                <a href="#secureDialogJobs" data-rel="popup" data-position-to="window" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-alert">Bouton d&rsquo;urgence</a>
                 <div data-role="popup" data-theme="a" id="secureDialogJobs" data-dismissible="false" data-overlay-theme="b">
                     <div data-theme="a" data-role="header">
                         <h1>
                             Confirmation
                         </h1>
                     </div>
-                    <div data-role="content">
+                    <div class="ui-content" role="main">
                         <h1>Lancer l&rsquo;appel d&rsquo;urgence ?</h1>
                         <input type="button" data-theme="b" data-icon="check" onClick="getLocationOnce()" value="CONFIRMER"/>
-                        <a href="#home" data-rel="back" data-icon="delete" data-role="button" data-transition="slideUp" data-theme="a">ANNULER</a>            
+                        <a href="#home" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-btn-icon-left ui-icon-delete" data-transition="slideUp">ANNULER</a>            
                         <div id="secureResults"></div>
                     </div>
                 </div>        
@@ -1222,15 +1252,15 @@
                   <li><a href="#infos" data-transition="slide"><b>Infos DCVP</b></a></li>
                   <li><a href="dcvpad.html" data-ajax="false" data-transition="slide"><b>Envoyer une course</b></a></li>
                 </ul>
-                <a href="#delayPop" data-rel="close" data-role="button" data-theme="a">Fermer</a>
+                <a href="#delayPop" data-rel="close" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-btn-icon-left ui-icon-delete">Fermer</a>
             </div><!-- /panel -->
             <div data-theme="a" data-role="header" data-position="fixed">
 				<h1 style="width:100%; padding: 0; margin: 0;">
-                    <a data-rel="back" data-icon="back" data-iconpos="left" data-role="button" data-transition="slide" data-inline="true" data-theme="a" ><b>Retour</b></a>            
-                    <a href="#delay_panel" data-role="button" data-iconpos="left" data-icon="home" data-transition="slide" data-inline="true" data-theme="b" ><b>Menu</b></a>
+                    <a data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-btn-icon-left ui-icon-back ui-btn-inline" data-transition="slide"><b>Retour</b></a>            
+                    <a href="#delay_panel" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-home ui-btn-inline" data-transition="slide"><b>Menu</b></a>
                 </h1>
             </div>
-            <div data-role="content">
+            <div class="ui-content" role="main">
             	<p>&nbsp;</p>
                 <div class="ui-bar-a ui-corner-all ui-shadow" style="padding:1em;">
                     <label for="delay">Temps d&rsquo;approche : </label>
@@ -1271,15 +1301,15 @@
                   <li><a href="#infos" data-transition="slide"><b>Infos DCVP</b></a></li>
                   <li><a href="dcvpad.html" data-ajax="false" data-transition="slide"><b>Envoyer une course</b></a></li>
                 </ul>
-                <a href="#cmd" data-rel="close" data-role="button" data-theme="a">Fermer</a>
+                <a href="#cmd" data-rel="close" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-btn-icon-left ui-icon-delete">Fermer</a>
             </div><!-- /panel -->
             <div data-theme="a" data-role="header" data-position="fixed">
 				<h1 style="width:100%; padding: 0; margin: 0;">
-                    <a data-rel="back" data-icon="back" data-iconpos="left" data-role="button" data-transition="slide" data-inline="true" data-theme="a" ><b>Retour</b></a>            
-                    <a href="#cmd_panel" data-role="button" data-iconpos="left" data-icon="home" data-transition="slide" data-inline="true" data-theme="b" ><b>Menu</b></a>
+                    <a data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-btn-icon-left ui-icon-back ui-btn-inline" data-transition="slide"><b>Retour</b></a>            
+                    <a href="#cmd_panel" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-home ui-btn-inline" data-transition="slide"><b>Menu</b></a>
                 </h1>
             </div>
-            <div data-role="content">
+            <div class="ui-content" role="main">
                 <div id="sound_cmd">
                     <a href="#cmd" onClick="Sound_Off()"><img src="visuels/sound_on.png" width="20"/></a>
                 </div>
@@ -1320,17 +1350,17 @@
                     -->
                 </div>
                 <div class="cleaner"></div>
-                <a href="#secureDialogCmd" data-rel="popup" data-position-to="window" data-role="button" class="secure-bt" data-theme="b" data-icon="alert">Bouton d&rsquo;urgence</a>
+                <a href="#secureDialogCmd" data-rel="popup" data-position-to="window" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-alert">Bouton d&rsquo;urgence</a>
                 <div data-role="popup" data-theme="a" id="secureDialogCmd" data-dismissible="false" data-overlay-theme="b">
                     <div data-theme="a" data-role="header">
                         <h1>
                             Confirmation
                         </h1>
                     </div>
-                    <div data-role="content">
+                    <div class="ui-content" role="main">
                         <h1>Lancer l&rsquo;appel d&rsquo;urgence ?</h1>
                         <input type="button" data-theme="b" data-icon="check" onClick="getLocationOnce()" value="CONFIRMER"/>
-                        <a href="#home" data-rel="back" data-icon="delete" data-role="button" data-transition="slideUp" data-theme="a">ANNULER</a>            
+                        <a href="#home" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-btn-icon-left ui-icon-delete" data-transition="slideUp">ANNULER</a>
                         <div id="secureResults"></div>
                     </div>
                 </div>        
@@ -1363,15 +1393,15 @@
                   <li><a href="#infos" data-transition="slide"><b>Infos DCVP</b></a></li>
                   <li><a href="dcvpad.html" data-ajax="false" data-transition="slide"><b>Envoyer une course</b></a></li>
                 </ul>
-                <a href="#planning" data-rel="close" data-role="button" data-theme="a">Fermer</a>
+                <a href="#planning" data-rel="close" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-btn-icon-left ui-icon-delete">Fermer</a>
             </div><!-- /panel -->
             <div data-theme="a" data-role="header" data-position="fixed">
 				<h1 style="width:100%; padding: 0; margin: 0;">
-                    <a data-rel="back" data-icon="back" data-iconpos="left" data-role="button" data-transition="slide" data-inline="true" data-theme="a" ><b>Retour</b></a>        
-                    <a href="#planning_panel" data-role="button" data-iconpos="left" data-icon="home" data-transition="slide" data-inline="true" data-theme="b" ><b>Menu</b></a>
+                    <a data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-btn-icon-left ui-icon-back ui-btn-inline" data-transition="slide"><b>Retour</b></a>        
+                    <a href="#planning_panel" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-home ui-btn-inline" data-transition="slide"><b>Menu</b></a>
                 </h1>
             </div>
-            <div data-role="content">
+            <div class="ui-content" role="main">
                 <div class="ui-bar-a ui-corner-all ui-shadow" style="padding:1em;">
                 	<p class="auction"><b>Courses command&eacute;es</b></p>
                 </div>
@@ -1403,15 +1433,15 @@
                     <li><a href="#infos" data-transition="slide"><b>Infos DCVP</b></a></li>
                     <li><a href="dcvpad.html" data-ajax="false" data-transition="slide"><b>Envoyer une course</b></a></li>
                 </ul>
-                <a href="#history" data-rel="close" data-role="button" data-theme="a">Fermer</a>
+                <a href="#history" data-rel="close" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-btn-icon-left ui-icon-delete">Fermer</a>
             </div><!-- /panel -->
             <div data-theme="a" data-role="header" data-position="fixed">
 				<h1 style="width:100%; padding: 0; margin: 0;">
-                    <a data-rel="back" data-icon="back" data-iconpos="left" data-role="button" data-transition="slide" data-inline="true" data-theme="a" ><b>Retour</b></a>            
-                    <a href="#history_panel" data-role="button" data-iconpos="left" data-icon="home" data-transition="slide" data-inline="true" data-theme="b" ><b>Menu</b></a>
+                    <a data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-btn-icon-left ui-icon-back ui-btn-inline" data-transition="slide"><b>Retour</b></a>            
+                    <a href="#history_panel" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-home ui-btn-inline" data-transition="slide"><b>Menu</b></a>
                 </h1>
             </div>
-            <div data-role="content">
+            <div class="ui-content" role="main">
                 <div class="ui-bar-a ui-corner-all ui-shadow" style="padding:1em;">
                 	<p class="auction"><b>Historique des courses</b></p>
                 </div>
@@ -1443,15 +1473,15 @@
                   <li><a href="#infos" data-transition="slide"><b>Infos DCVP</b></a></li>
                   <li><a href="dcvpad.html" data-ajax="false" data-transition="slide"><b>Envoyer une course</b></a></li>
                 </ul>
-                <a href="#infos" data-rel="close" data-role="button" data-theme="a">Fermer</a>
+                <a href="#infos" data-rel="close" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-btn-icon-left ui-icon-delete">Fermer</a>
             </div><!-- /panel -->
             <div data-theme="a" data-role="header" data-position="fixed">
 				<h1 style="width:100%; padding: 0; margin: 0;">
-                    <a data-rel="back" data-icon="back" data-iconpos="left" data-role="button" data-transition="slide" data-inline="true" data-theme="a" ><b>Retour</b></a>            
-                    <a href="#infos_panel" data-role="button" data-iconpos="left" data-icon="home" data-transition="slide" data-inline="true" data-theme="b" ><b>Menu</b></a>
+                    <a data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-btn-icon-left ui-icon-back ui-btn-inline" data-transition="slide"><b>Retour</b></a>            
+                    <a href="#infos_panel" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-home ui-btn-inline" data-transition="slide"><b>Menu</b></a>
                 </h1>
             </div>
-            <div data-role="content">
+            <div class="ui-content" role="main">
                 <img src="visuels/Infos_header_flat.png" width="96%"/>
                 <div id="infos_cont"></div>
             </div>
@@ -1476,15 +1506,15 @@
                   <li><a href="#infos" data-transition="slide"><b>Infos DCVP</b></a></li>
                   <li><a href="dcvpad.html" data-ajax="false" data-transition="slide"><b>Envoyer une course</b></a></li>
                 </ul>
-                <a href="#manage" data-rel="close" data-role="button" data-theme="a">Fermer</a>
+                <a href="#manage" data-rel="close" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-btn-icon-left ui-icon-delete">Fermer</a>
             </div><!-- /panel -->
             <div data-theme="a" data-role="header" data-position="fixed">
 				<h1 style="width:100%; padding: 0; margin: 0;">
-                    <a data-rel="back" data-icon="back" data-iconpos="left" data-role="button" data-transition="slide" data-inline="true" data-theme="a" ><b>Retour</b></a>            
-                    <a href="#manage_panel" data-role="button" data-iconpos="left" data-icon="home" data-transition="slide" data-inline="true" data-theme="b" ><b>Menu</b></a>
+                    <a data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-btn-icon-left ui-icon-back ui-btn-inline" data-transition="slide"><b>Retour</b></a>            
+                    <a href="#manage_panel" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-home ui-btn-inline" data-transition="slide"><b>Menu</b></a>
                 </h1>
             </div>
-            <div data-role="content">
+            <div class="ui-content" role="main">
                <div class="ui-bar-a ui-corner-all ui-shadow" style="padding:1em; text-align: left;">
                     <div data-role="collapsible-set" data-theme="b" data-content-theme="a">
                         <div data-role="collapsible" data-collapsed="true" id="mod_collaps">
@@ -1502,12 +1532,12 @@
                                     <option>Mlle</option>
                                     <option>Mr</option>
                                 </select>
-                                <input type="text" id="nom" name="nom" placeholder="Nom" maxlength="60" size="20" value="">
-                                <input type="text" id="prenom" name="prenom" placeholder="Pr&eacute;nom" maxlength="60" size="20" value="">
-                                <input type="tel" id="taxi" name="taxi" placeholder="Num&eacute;ro de taxi" maxlength="60" size="20" value="">
-                                <input type="tel" id="tel" name="tel" placeholder="T&eacute;l&eacute;phone (Sans espace SVP)" maxlength="60" size="20" value="">
-                                <input type="tel" id="siret" name="siret" placeholder="N&deg; SIRET (14 chiffres sans espace SVP)" maxlength="60" size="20" value="">
-                                <input type="text" id="station" name="station" placeholder="Commune de stationnement" maxlength="60" size="20" value="">
+                                <input type="text" id="nom" name="nom" data-clear-btn="true" placeholder="Nom" maxlength="60" size="20" value="">
+                                <input type="text" id="prenom" name="prenom" data-clear-btn="true" placeholder="Pr&eacute;nom" maxlength="60" size="20" value="">
+                                <input type="tel" id="taxi" name="taxi" data-clear-btn="true" placeholder="Num&eacute;ro de taxi" maxlength="60" size="20" value="">
+                                <input type="tel" id="tel" name="tel" data-clear-btn="true" placeholder="T&eacute;l&eacute;phone (Sans espace SVP)" maxlength="60" size="20" value="">
+                                <input type="tel" id="siret" name="siret" data-clear-btn="true" placeholder="N&deg; SIRET (14 chiffres sans espace SVP)" maxlength="60" size="20" value="">
+                                <input type="text" id="station" name="station" data-clear-btn="true" placeholder="Commune de stationnement" maxlength="60" size="20" value="">
                                 <select name="type" id="type">
                                     <option selected value="">Type de vehicule</option>
                                     <option>Berline</option>
@@ -1569,7 +1599,7 @@
                                 <label for="cb">
                                     Paiement CB : 
                                 </label>
-                                <select name="cb" id="cb" data-theme="a" data-role="slider">
+                                <select name="cb" id="cb" data-theme="a" data-role="flipswitch">
                                     <option value="0">
                                         Non
                                     </option>
@@ -1580,7 +1610,7 @@
                                 <label for="medic">
                                     Vehicule conventionn&eacute; : 
                                 </label>
-                                <select name="medic" id="medic" data-theme="a" data-role="slider">
+                                <select name="medic" id="medic" data-theme="a" data-role="flipswitch">
                                     <option value="0">
                                         Non
                                     </option>
@@ -1591,7 +1621,7 @@
                                 <label for="animal">
                                     Acceptez-vous les animaux : 
                                 </label>
-                                <select name="animal" id="animal" data-theme="a" data-role="slider">
+                                <select name="animal" id="animal" data-theme="a" data-role="flipswitch">
                                     <option value="0">
                                         Non
                                     </option>
@@ -1599,8 +1629,8 @@
                                         Oui
                                     </option>
                                 </select>
-                                <input type="email" name="email" id="email" placeholder="Adresse email" maxlength="60" size="20" value="">
-                                <input type="email" name="confirmail" placeholder="Confirmez email SVP" maxlength="60" size="20" value="">
+                                <input type="email" name="email" data-clear-btn="true" id="email" placeholder="Adresse email" maxlength="60" size="20" value="">
+                                <input type="email" name="confirmail" data-clear-btn="true" placeholder="Confirmez email SVP" maxlength="60" size="20" value="">
                                 <input type="hidden" name="modmy" value="1" />
                                 <input type="submit" name="submit" value="Envoyer">
                                 <p><b>
@@ -1637,8 +1667,8 @@
                             <h1>
                                 CGV 
                             </h1>
-                            <a href="#" onClick="cgv()" data-theme="b" data-role="button" data-icon="info" data-transition="slide"><b>Consulter les CGV</b></a>
-                            <a href="http://taxibleuservices.com/client/docs/CGV.pdf" target="_blank" data-theme="b" data-role="button" data-icon="edit" data-transition="slide"><b>T&eacute;l&eacute;charger les CGV</b></a>
+                            <a href="#" onClick="cgv()" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-info" data-transition="slide"><b>Consulter les CGV</b></a>
+                            <a href="http://taxibleuservices.com/client/docs/CGV.pdf" target="_blank" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-btn-icon-left ui-icon-action" data-transition="slide"><b>T&eacute;l&eacute;charger les CGV</b></a>
                         </div>
                     </div>
                     <input type="button" value="Scanner un QrCode" onClick="goScan()" data-icon="gear"/>
@@ -1667,25 +1697,25 @@
                   <li><a href="#infos" data-transition="slide"><b>Infos DCVP</b></a></li>
                   <li><a href="dcvpad.html" data-ajax="false" data-transition="slide"><b>Envoyer une course</b></a></li>
                 </ul>
-                <a href="#manage" data-rel="close" data-role="button" data-theme="a">Fermer</a>
+                <a href="#directions_map" data-rel="close" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-btn-icon-left ui-icon-delete">Fermer</a>
             </div><!-- /panel -->
 			<div data-role="header">
-            	<a href="#home" data-theme="b" data-transition="slide" data-role="button" data-iconpos="left"><h1><b>Retour</b></h1></a>
-                <a href="#map_panel" id="mapPanel_poper" data-role="button" data-iconpos="left" data-icon="home" data-transition="slide" data-inline="true" data-theme="b"><h1><b>Menu</b></h1></a>
+            	<a data-rel="back" href="#home" data-transition="slide" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-back ui-btn-inline"><h1><b>Retour</b></h1></a>
+                <a href="#map_panel" id="mapPanel_poper" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-home ui-btn-inline" data-transition="slide"><h1><b>Menu</b></h1></a>
 			</div>
             <div class="spacer"></div><div class="spacer"></div><div class="spacer"></div>
             
-			<div data-role="content">	
+			<div class="ui-content" role="main">	
 				<div class="ui-bar-a ui-corner-all ui-shadow" style="padding:1.5em;">
 					<p>
 						<label for="from">D&eacute;part</label>
-						<input id="from" class="ui-bar-c" type="text" value="Marseille, France" />
+						<input id="from" data-clear-btn="true" type="text" value="Marseille, France" />
 					</p>
 					<p>
 						<label for="to">Arriv&eacute;e</label>
-						<input id="to" class="ui-bar-c" type="text" value="" />                        
+						<input id="to" data-clear-btn="true" type="text" value="" />                        
 					</p>
-					<a id="submit" href="#" data-role="button" data-icon="search">Trouver l&rsquo;itin&eacute;raire</a>
+					<a id="submit" href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-btn-icon-left ui-icon-search">Trouver l&rsquo;itin&eacute;raire</a>
                     <div id="infos_map"></div>
 					<div id="map_canvas_1" style="height:260px;"></div>
 				</div>
@@ -1714,15 +1744,15 @@
                   <li><a href="#infos" data-transition="slide"><b>Infos DCVP</b></a></li>
                   <li><a href="dcvpad.html" data-ajax="false" data-transition="slide"><b>Envoyer une course</b></a></li>
                 </ul>
-                <a href="#toolate" data-rel="close" data-role="button" data-theme="a">Fermer</a>
+                <a href="#toolate" data-rel="close" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-btn-icon-left ui-icon-delete">Fermer</a>
             </div><!-- /panel -->
             <div data-theme="a" data-role="header" data-position="fixed">
 				<h1 style="width:100%; padding: 0; margin: 0;">
-                    <a href="#home" data-icon="back" data-iconpos="left" data-role="button" data-transition="slide" data-inline="true" data-theme="a" ><b>Retour</b></a>            
-                    <a href="#toolate_panel" data-role="button" data-iconpos="left" data-icon="home" data-transition="slide" data-inline="true" data-theme="b" ><b>Accueil</b></a>
+                    <a href="#home" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-btn-icon-left ui-icon-back ui-btn-inline" data-transition="slide"><b>Retour</b></a>            
+                    <a href="#toolate_panel" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-home ui-btn-inline" data-transition="slide"><b>Accueil</b></a>
                 </h1>
             </div>
-            <div data-role="content">
+            <div class="ui-content" role="main">
                 <div id="late_cont" class="ui-bar-b ui-corner-all ui-shadow" style="padding:1em;">
                </div>                    
                 <div id="results"></div>
@@ -1739,7 +1769,7 @@
                 	URGENCE
                 </h1>
             </div>
-            <div data-role="content">
+            <div class="ui-content" role="main">
                 <div id="urgent" class="ui-bar-b ui-corner-all ui-shadow" style="padding:1em;">
                 	<h1 style="color: #F00;">Proc&eacute;dure d&rsquo;appel d&rsquo;urgence activ&eacute;e.</h1>
                     <input type="button" data-theme="c" data-icon="check" onClick="stopSecureCall()" value="ARRETER"/>

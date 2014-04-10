@@ -306,7 +306,7 @@
 			}
 			function check_answer()
 			{
-				$.mobile.changePage( $("#urgency"), { transition: "slide"} );
+				$.mobile.pageContainer.pagecontainer("change", "#urgency", { transition: "slide"} );
 				var idcourseUrg = $.sessionStorage.getItem('idcourseUrg');
 				sec = setInterval( function () {
 					$.post("https://ssl14.ovh.net/~taxibleu/client/status.php?idcourse=" + idcourseUrg + "&check=1" , { dep: '13'}, function(data){ 
@@ -325,7 +325,7 @@
 			{
 				var idcourseUrg = $.sessionStorage.getItem('idcourseUrg');
 				$.post("https://ssl14.ovh.net/~taxibleu/client/secure.php", { taxi: '', tel: '', rdvpoint: '', helptaxi: taxi, helpname: '', helptel: tel, idcourse: idcourseUrg, dep: '', pass: 'true', stopcall: 'true'}, function(data){
-					$.mobile.changePage( $("#portal"), { transition: "slide"} );
+					$.mobile.pageContainer.pagecontainer("change", "#portal", { transition: "slide"} );
 				});
 				//$.sessionStorage.setItem('idcourseUrg', false);
 				clearInterval(sec);
@@ -338,7 +338,7 @@
 				});
 			}
 
-			$(document).bind( 'pageinit', function() {
+			$(document).bind( 'pagecreate', function() {
 				
 				active();				
 				footer();
@@ -447,7 +447,7 @@
 									display += '<p style="color:red;"><b>Le num&eacute;ro SIRET fourni est d&eacute;j&agrave; associ&eacute; &agrave; un compte.</b></p>';
 								}
 							}
-							$('#reg_collaps').trigger('collapse');
+							$('#reg_collaps').collapsible( "collapse" );
 							$("#returns").empty().append(display);
 							$.mobile.loading( "hide" );
 						}, "json");
@@ -465,7 +465,7 @@
             <div data-theme="a" data-role="header" data-position="fixed">
 				<h1><a href="http://taxibleuservices.com/client/" data-transition="slidefade" style="color:#09F; font-size:18px;">Bienvenue</a></h1>            
             </div>
-            <div data-role="content">
+            <div class="ui-content" role="main">
                 <div class="ui-bar-a ui-corner-all ui-shadow" style="padding:1em;display:block;">
                     <div data-role="collapsible-set" data-theme="b" data-content-theme="a">
                         <div data-role="collapsible" data-collapsed="true" id="reg_collaps">
@@ -552,7 +552,7 @@
                                 <label for="cb">
                                     Paiement CB : 
                                 </label>
-                                <select name="cb" id="cb" data-theme="a" data-role="slider">
+                                <select name="cb" id="cb" data-theme="a" data-role="flipswitch">
                                     <option value="0">
                                         Non
                                     </option>
@@ -563,7 +563,7 @@
                                 <label for="medic">
                                     Vehicule conventionn&eacute; : 
                                 </label>
-                                <select name="medic" id="medic" data-theme="a" data-role="slider">
+                                <select name="medic" id="medic" data-theme="a" data-role="flipswitch">
                                     <option value="0">
                                         Non
                                     </option>
@@ -574,7 +574,7 @@
                                 <label for="animal">
                                     Acceptez-vous les animaux : 
                                 </label>
-                                <select name="animal" id="animal" data-theme="a" data-role="slider">
+                                <select name="animal" id="animal" data-theme="a" data-role="flipswitch">
                                     <option value="0">
                                         Non
                                     </option>
@@ -610,7 +610,7 @@
                             <form  action="/" method="post" name="id" id="login" data-ajax="false" data-transition="slidefade">
                                 <input type="tel" name="log" size="20" maxlength="10" placeholder="Identifiant"/>
                                 <input type="password" name="pass" size="20" maxlength="16" placeholder="Mot de Passe"/>
-                                <input type="submit" id="subLog" value=" Connection "/>
+                                <input type="submit" id="subLog" value=" Connexion "/>
                             </form>
                             </fieldset>
                         </div>
@@ -641,7 +641,7 @@
                             Confirmation
                         </h1>
                     </div>
-                    <div data-role="content">
+                    <div class="ui-content" role="main">
                         <h1>Lancer l&rsquo;appel d&rsquo;urgence ?</h1>
                         <input type="button" data-theme="b" data-icon="check" onClick="getLocationOnce()" value="CONFIRMER"/>
                         <a href="#home" data-rel="back" data-icon="delete" data-role="button" data-transition="slideUp" data-theme="a">ANNULER</a>            
@@ -661,7 +661,7 @@
                 	URGENCE
                 </h1>
             </div>
-            <div data-role="content">
+            <div class="ui-content" role="main">
                 <div id="urgent" class="ui-bar-a ui-corner-all ui-shadow" style="padding:1em;">
                 	<h1 style="color: #F00;">Proc&eacute;dure d&rsquo;appel d&rsquo;urgence activ&eacute;e.</h1>
                     <input type="button" data-theme="c" data-icon="check" onClick="stopSecureCall()" value="ARRETER"/>
