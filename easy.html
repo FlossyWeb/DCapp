@@ -763,8 +763,6 @@
 				else {
 					navigator.geolocation.getCurrentPosition(secureCall, showError,{enableHighAccuracy:true, maximumAge:0});
 				}
-				//var watchId = navigator.geolocation.watchPosition(get_coords, showError);
-				//navigator.geolocation.getAccurateCurrentPosition(get_coords, showError, {maxWait:30000});
             }
             else {
 				alert("Localisation impossible.");
@@ -848,12 +846,12 @@
 			//window.plugins.childBrowser.showWebPage('http://taxibleuservices.com/client/docs/CGV.pdf', { showLocationBar: true });
 			window.open('http://taxibleuservices.com/client/docs/CGV.pdf','_blank','location=yes,enableViewportScale=yes,closebuttoncaption=Fermer');
 		}
-		function goEasy()
+		function unEasy()
 		{
 			$.mobile.loading( "show" );
-			$.localStorage.setItem('easy', true)
+			$.localStorage.setItem('easy', false)
 			var wait2go = setTimeout( function () {
-				document.location.href='easy.html';
+				document.location.href='home.html';
 			}, 1000);
 		}
 		
@@ -871,8 +869,8 @@
 				if(navigator.network.connection.type == Connection.NONE){
 					$("body").empty().append('<img src="no_network.png" onClick="window.location.reload()" />');
 				}
-				//Functions to call only at app first load
 				StatusBar.overlaysWebView(false);
+				//Functions to call only at app first load
 				getLocation();
 				dispo();
 				update();
@@ -901,8 +899,8 @@
 				}
 			} else if (productFormats.match(result.format)) {
 				var searchUrl = "https://www.google.fr/#q=" + result.text;
-				//setTimeout(function() { window.plugins.childBrowser.showWebPage(searchUrl, { showLocationBar: true }); }, 500);
-				setTimeout(function() { window.open(searchUrl,'_blank','location=yes,enableViewportScale=yes,closebuttoncaption=Fermer'); }, 500);
+				setTimeout(function() { window.plugins.childBrowser.showWebPage(searchUrl, { showLocationBar: true }); }, 500);
+				//setTimeout(function() { //window.open(searchUrl,'_blank','location=yes'); }, 500);
 			} else { alert("Format du scan: " + result.format + 
 					  " NON SUPPORTE. Valeur du scan: " + result.text);
 			}
@@ -1056,7 +1054,7 @@
                   <li><a href="#infos" data-transition="slide" class="ui-btn ui-btn-icon-left ui-icon-info"><b>Infos DCVP</b></a></li>
                   <li><a href="dcvpad.html" data-ajax="false" data-transition="slide" class="ui-btn ui-btn-icon-left ui-icon-action"><b>Envoyer une course</b></a></li>
                 </ul>
-                <a href="#"  onClick="goEasy()" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-power">Mode Simple</a>
+                <a href="#"  onClick="unEasy()" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-power">Mode Avanc&eacute;</a>
                 <a href="#home" data-rel="close" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-btn-icon-left ui-icon-delete">Fermer</a>
             </div><!-- /panel -->
             <div class="ui-content" role="main" id="home_cont">
@@ -1098,6 +1096,7 @@
                             Aide utilisateur
                         </p>
                     </a>
+
 					<a href="#manage" data-transition="slide" style="width:32%;display:inline-block;">
                     	<p style="font-size: x-small;color:#FFF;">
                             <img src="visuels/Facture_flat.png" width="90%"/><br>
@@ -1186,7 +1185,7 @@
                   <li><a href="#infos" data-transition="slide" class="ui-btn ui-btn-icon-left ui-icon-info"><b>Infos DCVP</b></a></li>
                   <li><a href="dcvpad.html" data-ajax="false" data-transition="slide" class="ui-btn ui-btn-icon-left ui-icon-action"><b>Envoyer une course</b></a></li>
                 </ul>
-                <a href="#"  onClick="goEasy()" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-power">Mode Simple</a>
+                <a href="#"  onClick="unEasy()" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-power">Mode Avanc&eacute;</a>
                 <a href="#jobs_taker" data-rel="close" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-btn-icon-left ui-icon-delete">Fermer</a>
             </div><!-- /panel -->
             <div data-theme="a" data-role="header" data-position="fixed">
@@ -1277,7 +1276,7 @@
                   <li><a href="#infos" data-transition="slide" class="ui-btn ui-btn-icon-left ui-icon-info"><b>Infos DCVP</b></a></li>
                   <li><a href="dcvpad.html" data-ajax="false" data-transition="slide" class="ui-btn ui-btn-icon-left ui-icon-action"><b>Envoyer une course</b></a></li>
                 </ul>
-                <a href="#"  onClick="goEasy()" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-power">Mode Simple</a>
+                <a href="#"  onClick="unEasy()" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-power">Mode Avanc&eacute;</a>
                 <a href="#delayPop" data-rel="close" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-btn-icon-left ui-icon-delete">Fermer</a>
             </div><!-- /panel -->
             <div data-theme="a" data-role="header" data-position="fixed">
@@ -1327,7 +1326,7 @@
                   <li><a href="#infos" data-transition="slide" class="ui-btn ui-btn-icon-left ui-icon-info"><b>Infos DCVP</b></a></li>
                   <li><a href="dcvpad.html" data-ajax="false" data-transition="slide" class="ui-btn ui-btn-icon-left ui-icon-action"><b>Envoyer une course</b></a></li>
                 </ul>
-                <a href="#"  onClick="goEasy()" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-power">Mode Simple</a>
+                <a href="#"  onClick="unEasy()" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-power">Mode Avanc&eacute;</a>
                 <a href="#cmd" data-rel="close" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-btn-icon-left ui-icon-delete">Fermer</a>
             </div><!-- /panel -->
             <div data-theme="a" data-role="header" data-position="fixed">
@@ -1420,7 +1419,7 @@
                   <li><a href="#infos" data-transition="slide" class="ui-btn ui-btn-icon-left ui-icon-info"><b>Infos DCVP</b></a></li>
                   <li><a href="dcvpad.html" data-ajax="false" data-transition="slide" class="ui-btn ui-btn-icon-left ui-icon-action"><b>Envoyer une course</b></a></li>
                 </ul>
-                <a href="#"  onClick="goEasy()" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-power">Mode Simple</a>
+                <a href="#"  onClick="unEasy()" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-power">Mode Avanc&eacute;</a>
                 <a href="#planning" data-rel="close" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-btn-icon-left ui-icon-delete">Fermer</a>
             </div><!-- /panel -->
             <div data-theme="a" data-role="header" data-position="fixed">
@@ -1461,7 +1460,7 @@
                   <li><a href="#infos" data-transition="slide" class="ui-btn ui-btn-icon-left ui-icon-info"><b>Infos DCVP</b></a></li>
                   <li><a href="dcvpad.html" data-ajax="false" data-transition="slide" class="ui-btn ui-btn-icon-left ui-icon-action"><b>Envoyer une course</b></a></li>
                 </ul>
-                <a href="#"  onClick="goEasy()" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-power">Mode Simple</a>
+                <a href="#"  onClick="unEasy()" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-power">Mode Avanc&eacute;</a>
                 <a href="#history" data-rel="close" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-btn-icon-left ui-icon-delete">Fermer</a>
             </div><!-- /panel -->
             <div data-theme="a" data-role="header" data-position="fixed">
@@ -1502,7 +1501,7 @@
                   <li><a href="#infos" data-transition="slide" class="ui-btn ui-btn-icon-left ui-icon-info"><b>Infos DCVP</b></a></li>
                   <li><a href="dcvpad.html" data-ajax="false" data-transition="slide" class="ui-btn ui-btn-icon-left ui-icon-action"><b>Envoyer une course</b></a></li>
                 </ul>
-                <a href="#"  onClick="goEasy()" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-power">Mode Simple</a>
+                <a href="#"  onClick="unEasy()" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-power">Mode Avanc&eacute;</a>
                 <a href="#infos" data-rel="close" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-btn-icon-left ui-icon-delete">Fermer</a>
             </div><!-- /panel -->
             <div data-theme="a" data-role="header" data-position="fixed">
@@ -1536,7 +1535,7 @@
                   <li><a href="#infos" data-transition="slide" class="ui-btn ui-btn-icon-left ui-icon-info"><b>Infos DCVP</b></a></li>
                   <li><a href="dcvpad.html" data-ajax="false" data-transition="slide" class="ui-btn ui-btn-icon-left ui-icon-action"><b>Envoyer une course</b></a></li>
                 </ul>
-                <a href="#"  onClick="goEasy()" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-power">Mode Simple</a>
+                <a href="#"  onClick="unEasy()" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-power">Mode Avanc&eacute;</a>
                 <a href="#manage" data-rel="close" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-btn-icon-left ui-icon-delete">Fermer</a>
             </div><!-- /panel -->
             <div data-theme="a" data-role="header" data-position="fixed">
@@ -1728,7 +1727,7 @@
                   <li><a href="#infos" data-transition="slide" class="ui-btn ui-btn-icon-left ui-icon-info"><b>Infos DCVP</b></a></li>
                   <li><a href="dcvpad.html" data-ajax="false" data-transition="slide" class="ui-btn ui-btn-icon-left ui-icon-action"><b>Envoyer une course</b></a></li>
                 </ul>
-                <a href="#"  onClick="goEasy()" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-power">Mode Simple</a>
+                <a href="#"  onClick="unEasy()" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-power">Mode Avanc&eacute;</a>
                 <a href="#directions_map" data-rel="close" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-btn-icon-left ui-icon-delete">Fermer</a>
             </div><!-- /panel -->
 			<div data-role="header">
@@ -1776,7 +1775,7 @@
                   <li><a href="#infos" data-transition="slide" class="ui-btn ui-btn-icon-left ui-icon-info"><b>Infos DCVP</b></a></li>
                   <li><a href="dcvpad.html" data-ajax="false" data-transition="slide" class="ui-btn ui-btn-icon-left ui-icon-action"><b>Envoyer une course</b></a></li>
                 </ul>
-                <a href="#"  onClick="goEasy()" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-power">Mode Simple</a>
+                <a href="#"  onClick="unEasy()" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-power">Mode Avanc&eacute;</a>
                 <a href="#toolate" data-rel="close" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-btn-icon-left ui-icon-delete">Fermer</a>
             </div><!-- /panel -->
             <div data-theme="a" data-role="header" data-position="fixed">
