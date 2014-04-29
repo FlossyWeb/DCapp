@@ -191,7 +191,7 @@
 
         $("#search-box").hide("fast");
 		$("#next-box").show("medium");
-        $(".mustHave").change(function () {
+        var ok = setInterval( function () {
             var name_filled = document.getElementById('Accurate').value;
             var cell_filled = document.getElementById('cellular').value;
             
@@ -205,7 +205,7 @@
                 $("#search-box").hide("fast");
                 $("#next-box").show("medium");
             }
-        });
+        }, 1000);
 		
 		$('#regLinks').append('<fieldset data-role="controlgroup"><legend>Derni&egrave;res informations saisies:</legend>');
 		for(n=1;n<4;n++) {
@@ -324,6 +324,7 @@
 	function searchLocationsNear(center, mapEvent) {
 		//clearLocations();
 		//alert('In searchLocationsNear');
+		$('#map').gmap('refresh');
 		var myDate = new Date();
 		idcourse = myDate.getTime();
 		//$('#dblinks').append($('<input id="idcourse" type="hidden" value="' + idcourse + '"/>'));
@@ -619,6 +620,17 @@
                     </div>
                     <div class="ui-content" role="main">
                         <div id="smsReturn"></div>
+                    </div>
+                </div>
+                <div data-role="popup" data-theme="a" id="errorPop" data-dismissible="true" data-overlay-theme="b">
+					<a href="#home" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-icon-delete ui-btn-icon-notext ui-btn-right">Fermer</a>
+                    <div data-theme="a" data-role="header">
+                        <h1>
+                            G&eacute;olocalisation
+                        </h1>
+                    </div>
+                    <div class="ui-content" role="main">
+                        <div id="ePopResults"></div>
                     </div>
                 </div>
             </div>
