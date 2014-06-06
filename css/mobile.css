@@ -31,8 +31,7 @@ a {
 	margin-right:auto;
 	background: #333;
 }
-
-
+label.error { float: none; color: red; padding-left: .5em; vertical-align: top; }
 .footer{
 	width:100%;
 	position:absolute;
